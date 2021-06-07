@@ -1,0 +1,75 @@
+<form novalidate (ngSubmit)="onSubmit()" class="flex flex-col items-center justify-items-center mx-6 mt-4">
+
+    <div class="flex w-full items-center justify-items-center">
+        <div class="search flex relative ">
+
+            <mat-form-field class="ml-4" appearance="fill">
+                <mat-label>Choisir le Fournisseur</mat-label>
+                <mat-select [formControl]="fournisseurFormControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let fournisseur of fournisseurs" [value]="fournisseur.id">
+                        {{fournisseur.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field class="ml-10 mr-8" appearance="fill">
+                <mat-label>Critère de recherche</mat-label>
+                <mat-select>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let filter of filters" [value]="filter.value">
+                        {{filter.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button class="h-11 w-40" mat-raised-button color="primary" (click)="openDialog()">rechercher</button>
+
+        </div>
+
+
+    </div>
+
+    <div *ngIf="toAdd !== undefined && toAdd.length > 0" class="w-full grid grid-cols-2">
+        <div>
+            <ul *ngFor="let item of toAdd">
+                <li
+                    class="bg-white py-2 my-2 flex shadow-lg justify-between px-6 rounded-md items-center justify-center">
+                    <div class="h-24 w-24">
+                        <img [src]="formatImage(item.image)" />
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="font-mono font-semibold">{{item.name}}</p>
+
+                        <div class=" grid grid-cols-2 ">
+                            <span class="text-gray-500 font-semibold ">Seuil: </span>
+                            <p> {{item.reorderLevel}} </p>
+                            
+                            <span class="text-gray-500 font-semibold ">Restant: </span>
+                            <p> {{item.quantity}} </p>
+                        </div>
+
+                    </div>
+                    <mat-form-field class="product__qty">
+                        <mat-label>Quantité(s) a commander</mat-label>
+                        <input name="qty" type="number" matInput placeholder="Ex. 5" [(ngModel)]="item.quantityToCmd">
+                    </mat-form-field>
+
+                    <div class="flex flex-col ml-2">
+                        <mat-icon (click)="removeFromCommand(item)" matTooltip="Eliminer de la commande"
+                            aria-hidden="false" class="cursor-pointer text-red-700">delete</mat-icon>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="flex ml-10 h-12 ">
+            <button type="submit" [disabled]="fournisseurFormControl.invalid" mat-raised-button color="secondary"
+                class="cmd__btn">Créer la commande fournisseur</button>
+        </div>
+
+    </div>
+
+
+</form>

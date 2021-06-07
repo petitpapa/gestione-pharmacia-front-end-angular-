@@ -1,0 +1,125 @@
+<div class="flex flex-col w-full">
+    <h2 mat-dialog-title>Details de la commande</h2>
+    <mat-dialog-content class="mat-typography">
+
+        <!--Header-->
+        <div class="grid grid-flow-col grid-cols-2 grid-rows-1  border b-2 items-center">
+            <div class="flex justify-items-center items-center">
+                <div class="w-36 h-36">
+                    <img src="assets/img/pharma-logo.jpg" alt="Pharmacie logo">
+                </div>
+                <h2>Pharmacie Koloma II</h2>
+            </div>
+
+            <div class="flex flex-col justify-items-center ">
+                <div class="bg-gray-400 h-4"></div>
+                <div class="ml-48 font-semibold">Facture</div>
+                <div class="bg-gray-400 h-4"></div>
+            </div>
+        </div>
+        <!--End of header-->
+        <div class="border b-2 pt-6 flex flex-1">
+            <div class="grid  grid-cols-2 grid-rows-2 gap-1">
+                <p class="font-semibold">Responsable: </p>
+                <p>Alseny</p>
+                <p class="font-semibold">Telephone: </p>
+                <p>546464465</p>
+            </div>
+            <div>
+                kk
+            </div>
+        </div>
+
+        <!--Supplier info-->
+        <div class="supplier--order">
+            <div class="flex bg-gray-300">
+                Fournisseur
+            </div>
+            <div></div>
+            <div class="bg-gray-300 border-2 border-gray-800">
+                N° commande
+            </div>
+            <div class="bg-gray-300 border-2 border-gray-800 border-l-0">
+                Date
+            </div>
+        </div>
+        <div class="supplier--order">
+            <div class="grid grid-cols-2">
+                <span class="font-semibold">Nom:</span> <span>supplierName</span>
+            </div>
+            <div></div>
+            <div>
+                {{data.command.commandId}}
+            </div>
+            <div>
+                {{data.command.deliveryDate}}
+            </div>
+        </div>
+
+        <div class="supplier--order">
+            <div class="grid grid-cols-2">
+                <span class="font-semibold">Address:</span> <span>Koloma 2</span>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="supplier--order">
+            <div class="grid grid-cols-2">
+                <span class="font-semibold">Telephone:</span> <span> 56489745555</span>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="supplier--order">
+            <div class="grid grid-cols-2">
+                <span class="font-semibold">Email:</span> <span>petitpapa@gmail.com</span>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <section class="mt-6">
+            <div class="invoice--detail bg-gray-300 table--header">
+                <span class="border-2 border-gray-800 ">N°</span>
+                <span class="border-2 border-gray-800 border-l-0">Description</span>
+                <span class="border-2 border-gray-800 border-l-0">Quantité</span>
+                <span class="border-2 border-gray-800 border-l-0">Prix</span>
+                <span class="border-2 border-gray-800 border-l-0">Total</span>
+            </div>
+            <div class="invoice--detail table--row" *ngFor="let item of data.command.items">
+                <span class="border-2 border-gray-800 border-t-0">{{item.productId}}</span>
+                <span class="border-2 border-gray-800 border-l-0 border-t-0">{{item.productName}}</span>
+                <span class="border-2 border-gray-800 border-l-0 border-t-0 text-right">{{item.commandQuantity}}</span>
+                <span class="border-2 border-gray-800 border-l-0 border-t-0 text-right">{{item.supplierPrice}}</span>
+                <span class="border-2 border-gray-800 border-l-0 border-t-0 text-right">{{item.supplierPrice *
+                    item.commandQuantity}}</span>
+            </div>
+            <div class="invoice--subtotal table--row">
+                <span></span>
+                <span></span>
+                <div class="flex flex-col">
+                    <div class="grid grid-cols-2 border-l-2 border-r-2 border-gray-800">
+                        <span class="">Sub total</span> <span class="text-right">4564164</span>
+                    </div>
+                    <div class="grid grid-cols-2 border-l-2 border-r-2 border-gray-800">
+                        <span>Remise</span> <span class="text-right">4564164</span>
+                    </div>
+                    <div class="grid grid-cols-2 border-l-2 border-r-2 border-gray-800"><span>Tax</span> <span
+                            class="text-right">4564164</span></div>
+                    <div class="grid grid-cols-2 border-l-2 border-r-2 border-gray-800"><span>Fraix</span> <span
+                            class="text-right">{{data.totalAmount}}</span></div>
+                    <div class="grid grid-cols-2 bg-gray-300"><span class="border-2 border-gray-800">Total</span> <span
+                            class="text-right border-2 border-gray-800 border-l-0">{{data.totalAmount}}</span></div>
+                </div>
+
+            </div>
+        </section>
+
+
+    </mat-dialog-content>
+
+</div>

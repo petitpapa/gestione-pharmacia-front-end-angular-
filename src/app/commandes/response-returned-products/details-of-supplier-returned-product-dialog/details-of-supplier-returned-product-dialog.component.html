@@ -1,0 +1,29 @@
+<div class="grid grid-cols-2 text-xs ">
+  <p class="text-indigo-600 text-base mb-3 tracking-wider underline">Produit accepté ou refusé ou suspendu par le fournisseur</p><p></p>
+  <p class="font-semibold w-1/3 mb-2">Nom du Produit: </p>
+  <p>{{data.productName}}</p>
+  <p class="font-semibold w-1/3  mb-2">Forme du Produit: </p>
+  <p>{{data.productForm}}</p>
+  <p class="font-semibold w-1/3 mb-2">Prix de vente: </p>
+  <p>{{data.salePrice}}</p>
+  <p class="font-semibold w-1/3 mb-2">Date d'emission: </p>
+  <p>{{data.dateOfIssue}}</p>
+  <p class="font-semibold w-1/3 mb-2">Raison: </p>
+  <p>{{data.reason}}</p>
+  <p class="font-semibold w-1/3 mb-2">Etat: </p>
+  <p>{{data.state === 'WAITING_SUPPLIER_RESPONSE' ? "En attente de la response du fournisseur" : "Suspendue"}}</p>
+  <p class="font-semibold w-1/3 mb-2">Qté emise du produit: </p>
+  <p>{{data.emittedQty}}</p>
+  <p class="font-semibold w-1/3 mb-2">Qté retournée: </p>
+  <mat-form-field class="example-full-width">
+    <input type="number" min="0" matInput placeholder="Ex. 5"  [(ngModel)]="data.returnedQty">
+  </mat-form-field>
+  <p class="font-semibold w-1/3 mb-2">Qté acceptée: </p>
+  <mat-form-field class="example-full-width">
+    <input type="number" min="0" matInput placeholder="Ex. 10" [(ngModel)]="data.acceptedQty">
+  </mat-form-field>
+  <div class="w-1/4">
+    <button class="btn--valid" mat-raised-button color="primary" (click)="emitUpdatedData()">Valider Avoir</button>
+  </div>
+
+</div>

@@ -1,0 +1,93 @@
+<div class="flex flex-col px-3.5 content--height">
+
+    <div class="spinner__centered" *ngIf="isLoading; else bl">
+        <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+    </div>
+    <ng-template #bl>
+        <h2 class="text-gray-700 tracking-wider text-sm">List des produits siasis par date</h2>
+        <div class="flex items-center relative">
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Period</mat-label>
+                    <mat-date-range-input [formGroup]="period" [rangePicker]="picker">
+                        <input matStartDate formControlName="start" placeholder="Start date">
+                        <input matEndDate formControlName="end" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+
+                </mat-form-field>
+            </div>
+
+
+            <div class="flex absolute right-4">
+                <button class="validation--btn" mat-flat-button color="primary" (click)="reload()">Valider</button>
+            </div>
+        </div>
+        <mat-form-field appearance="fill" class="w-2/6">
+            <mat-label>filtrer</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. paracetamol ou le fournisseur" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="supplierName">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Fournisseur </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.supplierName}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="date">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Date de reception </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.createdDate}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="bl">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> N° BL </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </td>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="form">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Form </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.productForm}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="productName">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Nom produit </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.productName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="qty">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.qty}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ppv">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix de Vente </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.salePrice}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="expiryDate">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Péremption </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.expiryDate}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Pas de BL {{input.value}}</td>
+                </tr>
+            </table>
+
+            <mat-paginator #blPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </ng-template>
+
+</div>

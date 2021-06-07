@@ -1,0 +1,22 @@
+
+<div class="flex flex-col">
+
+  <a class="flex inline-block flex-auto justify-between items-center " data-toggle="collapse" data-parent="#sidebar">
+    <div class="flex w-10 icons--color items-center text-center justify-items-center opacity-60" [innerHTML]="svg"></div>
+
+    <p class="pl-3 flex-auto font-semibold text-gray-400 item--description" >
+       {{row.description}}
+    </p>
+    <svg *ngIf="!isOpen && isSameAndHasContent" (click)="onClickOpen()" class="w-6 h-6 cursor-pointer icons--color font-semibold"
+      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+    <svg (click)="onClickOpen()" *ngIf="isOpen && row.id === parentId" class="w-6 h-6 icons--color font-semibold" xmlns="http://www.w3.org/2000/svg"
+      fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </a>
+  <ul class="{{isOpen? 'li__item': 'collapse absolute'}}" *ngFor="let menu of row.menus">
+    <li class=" active cursor-pointer font-semibold tracking-wide"(click)="goTo(menu)">{{menu.description}}</li>
+  </ul>
+</div>

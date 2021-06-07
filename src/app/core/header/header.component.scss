@@ -1,0 +1,19 @@
+
+
+.header__menu__bg--black {
+  background: #1a1a1a;
+}
+
+.header__icons__bg--color {
+    background-color: #808080;
+}
+.header__search--color{
+  background: rgba(0,0,0,0.1);
+  color:#495057;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  padding-left: 0px;
+  opacity: 100; /* Firefox */
+}

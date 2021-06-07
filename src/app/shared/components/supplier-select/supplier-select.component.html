@@ -1,0 +1,7 @@
+<mat-form-field appearance="fill" class="mt-2">
+  <mat-label class="text-xs font-semibold tracking-wider">Choisir le fournisseur</mat-label>
+  <mat-select class="supplier--text text-gray-600 tracking-wider font-semibold" [formControl]="supplierCtrl">
+    <mat-option  *ngFor="let s of suppliers" [value]="s">{{s.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+

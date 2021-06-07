@@ -1,0 +1,35 @@
+.command__validated {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 110px 450px;
+}
+
+.mat-raised-button {
+  height: 24px;
+  outline: none;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08cm;
+  justify-content: center;
+  line-height: normal;
+  margin-right: 4px;
+}
+ul {
+  font-size: 12px;
+  li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+
+ul:nth-child(even) {
+  background: #ccc;
+}
+ul:nth-child(odd) {
+  background: #fff;
+}
+
+.gestion--btn{
+  color: black;
+}
+

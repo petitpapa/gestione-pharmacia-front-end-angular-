@@ -1,0 +1,35 @@
+.quantity {
+  display: flex;
+
+  .arrow {
+    cursor: pointer;
+  }
+
+  .value {
+    margin: 0 10px;
+  }
+}
+
+.price {
+  font-size: 14px;
+  .currency {
+    font-size: 8px;
+  }
+}
+
+.btn--valid {
+  font-size: 10px;
+}
+
+.remise {
+  margin-left: 10px;
+  max-width: 100px;
+  input {
+    text-align: right;
+  }
+}
+
+.item--end {
+  justify-self: end;
+ 
+}

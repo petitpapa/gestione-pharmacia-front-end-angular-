@@ -1,0 +1,152 @@
+<div class="h-screen flex flex-row">
+
+    <div class="centered" *ngIf="isLoading ; else content">
+        <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+    </div>
+    <ng-template #content>
+        
+        <div class="w-5/6 px-4">
+            <div class="h-5/6 flex flex-col">
+                <div class="text-sm"> <span class="text-gray-500">Client: </span>  <span class="ml-4 font-semibold tracking-widest"> {{(selectedCustomer$| async).name}}</span> </div>
+                <div class="mb-4">
+                    <mat-form-field>
+                        <mat-label>chercher</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                    </mat-form-field>
+                </div>
+
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="id">
+                        <th class="table--header" *matHeaderCellDef> No. </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="image">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> Photo </th>
+                        <td class="table--row" mat-cell *matCellDef="let element">
+                            <div class=" flex h-16 w-16">
+                                <img [src]="formatImage(element.image)" />
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="Form">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> Form </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.form.description}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="Rayon">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> Rayon </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.rayon.description}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> Nom </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> Prix </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.price}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> stock </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="expiryDate">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> Péremption </th>
+                        <td class="table--row" mat-cell *matCellDef="let element"> {{element.expiryDate}} </td>
+                    </ng-container>
+                    <!-- action Column -->
+                    <ng-container matColumnDef="actions">
+                        <th class="table--header" mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="flex">
+                                <button mat-stroked-button matTooltip="Ajouter au panier"
+                                    class="btn text-xs text-gray-500" (click)="addToShoppingCart(element)">
+                                    <mat-icon>add_shopping_cart</mat-icon>
+                                </button>
+                                <button mat-stroked-button matTooltip="Fiche produit" (click)="openProductDetailDialog(element)" class="btn text-xs text-gray-500">
+                                    <mat-icon>dvr</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                    </tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[10, 15]" showFirstLastButtons></mat-paginator>
+            </div>
+
+
+            <div *ngIf="(numberOfItems| async) > 0"
+                class="flex justify-between w-3/5 justify-items-center items-center bg-gray-300 px-4 py-2">
+                <p class="relatice text-gray-600"> <span class="text-gray-600 font-semibold">Sous-total du panier</span>
+                    (2
+                    articles): <span class="text-red-600"> {{total| async}}</span> <span
+                        class="text-xs absolute">FG</span>
+                </p>
+                <div class="flex">
+                    <button mat-stroked-button class="text-xs btn--success btn--commande" (click)="goToShoppingCart()">Panier</button>
+                </div>
+            </div>
+
+
+            <div class=" flex h-1/6 bot">
+                <div class="flex flex-col bg-white px-2 circle mr-2" (click)="goToOldSales()">
+                    <mat-icon class="text-gray-500 ">
+                        monetization_on
+                    </mat-icon>
+                    <span class="text-indigo-600 text-xs font-semibold" >Ventes passées</span>
+                </div>
+                <div class="flex flex-col bg-white px-2 circle mr-2">
+                    <mat-icon class="text-red-500 ">
+                        cancel
+                    </mat-icon>
+                    <span class="text-indigo-600 text-xs font-semibold">Annuler la vente</span>
+                </div>
+
+               <!-- <div class="flex flex-col bg-white px-2 circle mr-2">
+                    <mat-icon class="text-gray-500">
+                        arrow_upward
+                    </mat-icon>
+                    <span class="text-indigo-600 text-xs font-semibold">Retour client</span>
+                </div>
+                -->
+                <div *ngIf="(selectedCustomer$| async).category !== 'CLIENT_DE_PASSAGE' && (numberOfItems| async) > 0" class="flex flex-col bg-white px-2 circle mr-2" (click)="suspendSale()">
+                   <mat-icon > money_off</mat-icon>
+                    <span class="text-indigo-600 text-xs font-semibold">Suspendre la vente</span>
+                </div>
+                <div class="flex flex-col bg-white px-2 circle mr-2" (click)="openAddCustomerDialog()">
+                    <mat-icon class="text-gray-500">
+                        person_add
+                    </mat-icon>
+                    <span class="text-indigo-600 text-xs font-semibold">Ajouter Le Client</span>
+                </div>
+                <div *ngIf="(selectedCustomer$| async).category !== 'CLIENT_DE_PASSAGE'" class="flex flex-col bg-white px-2 circle mr-2">
+                    <mat-icon class="text-gray-500">
+                        open_in_new
+                    </mat-icon>
+                    <span class="text-indigo-600 text-xs font-semibold" (click)="restoreSuspendedSales()">Reprendre la vente</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-1/6 flex flex-col justify-items-center items-center mt-14">
+            <div class="flex justify-items-center items-center" *ngFor="let item of cartItems$| async">
+                <img [src]="formatImage(item.image)" alt="image produit" />
+                <span class="ml-4 table--row">{{item.name}}</span>
+                <span class="ml-4"> X {{item.quantityToCmd}}</span>
+            </div>
+
+        </div>
+    </ng-template>
+
+</div>

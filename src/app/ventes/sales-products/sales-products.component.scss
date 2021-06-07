@@ -1,0 +1,39 @@
+table {
+  width: 100%;
+  tr {
+    height: 24px;
+  }
+}
+mat-form-field.mat-form-field {
+  height: 16px;
+}
+
+.circle {
+  border-radius: 50%;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  width: 125px;
+  height: 80px;
+  cursor: pointer;
+}
+.btn {
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+  justify-content: center;
+  line-height: 1.8 !important;
+}
+img{
+    height: 48px ;
+}
+
+.btn--commande{
+  margin-left: 4px;
+}
+
+.centered {
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+}

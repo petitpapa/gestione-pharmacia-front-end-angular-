@@ -1,0 +1,11 @@
+<app-sidebar class="flex flex-col text-white w-{{width}}
+        overflow-x-hidden sb__background--color min-h-screen " (mouseover)="expandSidebar()"
+    (mouseout)="shrinkSidebar()"></app-sidebar>
+<div class="flex flex-col flex-1">
+    <div class="h-12">
+        <app-header></app-header>
+    </div>
+    <div class="flex flex-col">
+        <router-outlet></router-outlet>
+    </div>
+</div>

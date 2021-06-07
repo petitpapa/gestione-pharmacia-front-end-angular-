@@ -1,0 +1,92 @@
+<mat-dialog-content class="mat-typography">
+    <div class="mb-5">Fiche de stock</div>
+    <div class="grid grid-cols-2 auto-cols-max gap-4 table--row">
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Forme</mat-label>
+            <input matInput readonly [value]="detail?.product?.form?.description">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Produit</mat-label>
+            <input matInput readonly [value]="detail?.product?.name">
+        </mat-form-field>
+    </div>
+
+    <div class="grid grid-cols-2 auto-cols-max gap-4 table--row">
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Type</mat-label>
+            <input *ngIf="detail?.product?.category !== null; else category" matInput readonly [value]="detail?.product?.category?.description">
+            <ng-template #category><input matInput readonly value="Aucun type assigné"></ng-template>
+             
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Famille</mat-label>
+            <input *ngIf="detail?.product?.therapeuticFamilly !== null; else famille" matInput readonly [value]="detail?.product?.therapeuticFamilly?.description">
+            <ng-template #famille><input matInput readonly value="Aucune Famille therapeutique assignée"></ng-template>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Code barre</mat-label>
+            <input matInput readonly [value]="detail?.product?.barCode">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Prix d'achat moyen</mat-label>
+            <input matInput readonly [value]="detail?.averagePrice">
+        </mat-form-field>
+    </div>
+    <div class="grid grid-cols-2 gap-4 auto-cols-max table--row">
+        <mat-form-field appearance="fill" class="input--width">
+            <mat-label>Rayon</mat-label>
+            <input *ngIf="detail?.product?.rayon !== null; else rayon" matInput readonly [value]="detail?.product?.rayon?.description">
+            <ng-template #rayon><input matInput readonly value="Pas de rayon assigné"></ng-template>
+        </mat-form-field>
+
+       <mat-form-field appearance="fill" class="input--width">
+            <mat-label class="text-indigo-600">Prix de vente moyenne</mat-label>
+            <input *ngIf="detail?.product?.rayon !== null; else rayon" matInput readonly [value]="detail?.sellingPriceAverage">
+            <ng-template #rayon><input matInput readonly value="Aucune vente effectuée"></ng-template>
+        </mat-form-field>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 auto-cols-max">
+        <mat-form-field appearance="fill" class="input--width table--row">
+            <mat-label>Dernier Achat</mat-label>
+            <input *ngIf="detail?.lastBying !== null; else stock" matInput readonly [value]="detail?.lastBying">
+            <ng-template #stock><input matInput readonly value="Pas de stock disponible"></ng-template>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="input--width table--row">
+            <mat-label>Dernière vente </mat-label>
+            <input *ngIf="detail?.lastSelling !== null; else vente" matInput readonly [value]="detail?.lastSelling">
+            <ng-template #vente><input matInput readonly value="Aucune vente effectué"></ng-template>
+        </mat-form-field>
+
+        <div class="flex flex-col font-bold">
+            <span class="">Fournisseur</span>
+
+            <ul class="table--row px-4" *ngFor="let supplier of detail?.suppliers">
+                <li>{{ supplier}}</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="flex flex-col mt-4">
+        <ul class="grid grid-cols-3 auto-cols-max table--header">
+            <li>Prix d'achat</li>
+            <li>Quantité</li>
+            <li>Péremption</li>
+        </ul>
+
+        <ul class="grid grid-cols-3 auto-cols-max table--row" *ngFor="let item of detail?.priceAndExpirationItems">
+            <li >{{item.buyingPrice}} </li>
+            <li>{{item.qty}}</li>
+            <li>{{item.expirationDate}}</li>
+        </ul>
+
+    </div>
+
+</mat-dialog-content>

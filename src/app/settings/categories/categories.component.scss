@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+  tr {
+    height: 28px;
+  }
+}
+
+.table--container {
+  height: 40vh;
+  overflow: auto;
+}
+mat-form-field.mat-form-field {
+  height: 16px;
+}
+.cont{
+    height: 64vh
+}
+
+.centered {
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+}

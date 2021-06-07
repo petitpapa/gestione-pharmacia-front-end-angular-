@@ -1,0 +1,58 @@
+Error: There is no JAR file in ./java/ !
+    at getJavaFile_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:122:19)
+    at spawnServerProcess_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:137:24)
+    at C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:196:41
+    at step (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:32:23)
+    at Object.next (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:13:53)
+    at fulfilled (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:4:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Error: There is no JAR file in ./java/ !
+    at getJavaFile_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:122:19)
+    at spawnServerProcess_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:137:24)
+    at C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:202:41
+    at step (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:32:23)
+    at Object.next (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:13:53)
+    at fulfilled (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:4:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Error: There is no JAR file in ./java/ !
+    at getJavaFile_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:138:19)
+    at spawnServerProcess_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:153:24)
+    at C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:193:41
+    at step (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:32:23)
+    at Object.next (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:13:53)
+    at fulfilled (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:4:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Error: There is no JAR file in ./java/ !
+    at getJavaFile_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:138:19)
+    at spawnServerProcess_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:153:24)
+    at C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:193:41
+    at step (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:32:23)
+    at Object.next (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:13:53)
+    at fulfilled (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:4:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Error: There is no JAR file in ./java/ !
+    at getJavaFile_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:138:19)
+    at spawnServerProcess_1 (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:153:24)
+    at C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:193:41
+    at step (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:32:23)
+    at Object.next (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:13:53)
+    at fulfilled (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:4:58)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Error: java exec:   Error: spawn C:\Users\acisse\Documents\pharmacy-app\java\jdk11\bin\java ENOENT
+    at ChildProcess.<anonymous> (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:146:27)
+    at ChildProcess.emit (events.js:315:20)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:273:12)
+    at onErrorNT (internal/child_process.js:469:16)
+    at processTicksAndRejections (internal/process/task_queues.js:84:21)
+Error: java exec:   Error: spawn C:\Users\acisse\Documents\pharmacy-app\java\jdk11\bin\java ENOENT
+    at ChildProcess.<anonymous> (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:147:27)
+    at ChildProcess.emit (events.js:315:20)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:273:12)
+    at onErrorNT (internal/child_process.js:469:16)
+    at processTicksAndRejections (internal/process/task_queues.js:84:21)
+Error: java exec:   Error: spawn C:\Users\acisse\Documents\pharmacy-app\java\jdk11\bin\java ENOENT
+    at ChildProcess.<anonymous> (C:\Users\acisse\Documents\pharmacy-app\front-end\main.js:147:27)
+    at ChildProcess.emit (events.js:315:20)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:273:12)
+    at onErrorNT (internal/child_process.js:469:16)
+    at processTicksAndRejections (internal/process/task_queues.js:84:21)

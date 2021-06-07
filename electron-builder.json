@@ -1,0 +1,57 @@
+{
+  "productName": "PharmaAppDesktop",
+  "appId": "petitpapa.media",
+  "directories": {
+    "output": "release/"
+  },
+  "files": [
+    "**/*",
+    
+    "!*.code-workspace",
+    "!LICENSE.md",
+    "!java",
+    "!package-lock.json",
+    
+    "!e2e/",
+    "!hooks/",
+    "!angular.json",
+    "!_config.yml",
+    "!karma.conf.js",
+    "!tsconfig.json",
+    "!tslint.json"
+  ],
+ "extraResources": [
+      {
+        "from": "./java/",
+        "to": "java",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+  "win": {
+    "icon": "dist/assets/icons/pharma.ico",
+    "target": ["nsis"]
+  },
+  "mac": {
+    "icon": "dist/assets/icons",
+    "target": ["dmg"]
+  },
+  "linux": {
+    "icon": "dist/assets/icons",
+    "target": ["AppImage"]
+  },
+  "nsis": {
+    "installerIcon": "dist/assets/icons/pharma.ico",
+    "uninstallerIcon": "dist/assets/icons/pharma.ico",
+    "uninstallDisplayName": "Pharma app",
+    "oneClick": false,
+    "unicode": true,
+    "warningsAsErrors": true,
+     "runAfterFinish": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "menuCategory": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

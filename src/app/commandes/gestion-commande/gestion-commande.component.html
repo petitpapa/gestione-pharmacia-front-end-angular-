@@ -1,0 +1,50 @@
+<div class="flex flex-col p-2 new--command">
+    <h3 class="font-semibold mb-4 tracking-wider">La liste des commandes</h3>
+    <table mat-table [dataSource]="commandSummaries" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th class="table--header" mat-header-cell *matHeaderCellDef>Numero command</th>
+            <td  class="table--row" mat-cell *matCellDef="let element"> {{element.cmdNumber}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Supplier">
+            <th class="table--header"  mat-header-cell *matHeaderCellDef> Fournisseur </th>
+            <td class="table--row" mat-cell *matCellDef="let element"> {{element.supplier}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Date">
+            <th class="table--header"mat-header-cell *matHeaderCellDef> Date </th>
+            <td class="table--row" mat-cell *matCellDef="let element"> {{element.createdOn| date:'shortDate'}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Quantité(s)">
+            <th class="table--header" mat-header-cell *matHeaderCellDef> Quantité(s) </th>
+            <td class="table--row" mat-cell *matCellDef="let element"> {{element.qty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action" >
+            <th mat-header-cell *matHeaderCellDef class="w-60"> </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="flex justify-between">
+                    <mat-icon class="icon--info cursor-pointer" aria-hidden="false" matTooltip="Voir le detail" (click)="updateOrDetailCommand(element.cmdNumber, false)">info</mat-icon>
+                    <mat-icon class="icon--success cursor-pointer" aria-hidden="false" matTooltip="Receptionner" (click)="gotToRecptionPage(element.cmdNumber)">save</mat-icon>
+                    <mat-icon class="icon--warning cursor-pointer"  aria-hidden="false" matTooltip="Modifier le BL" (click)="updateOrDetailCommand(element.cmdNumber, true)" >update</mat-icon>
+                    <mat-icon class="icon--danger cursor-pointer" aria-hidden="false" matTooltip="Supprimer">delete</mat-icon>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+
+</div>

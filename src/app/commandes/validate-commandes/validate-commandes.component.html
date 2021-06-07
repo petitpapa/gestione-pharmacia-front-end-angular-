@@ -1,0 +1,39 @@
+<div class="flex flex-col p-4">
+
+    <mat-card class="font-semibold text-gray-600  ">
+        <span class="text-red-400 uppercase">attention: </span> Aucune Modification ne sera possible après le pointe.
+        Verifier les details des commandes avant le
+        pointage!
+    </mat-card>
+
+    <div class="bg-white flex flex-col shadow-xl mt-5 rounded-md">
+        <div class="command__validated table--header py-2">
+            <p>Fournisseur</p>
+            <p>Date de reception</p>
+            <p>Numero de Lot</p>
+            <p>Nombre de produits</p>
+            <p>Total</p>
+            <p>Remise</p>
+            <p></p>
+        </div>
+        <mat-divider></mat-divider>
+        <ul role="list" *ngFor="let command of commands" class="command__validated py-2 table--row">
+            <li>{{command.supplierName}}</li>
+            <li>{{command.deliveryDate}}</li>
+            <li>{{command.invoiceNumber}}</li>
+            <li>{{command.items.length}}</li>
+            <li>{{command.totalAmount}}</li>
+            <li>{{command.totalDiscount}}</li>
+            <li class="text-center" >
+                <button mat-raised-button class="gestion--btn">Imprimer</button>
+                <button mat-raised-button class="btn--success" (click)="validatedCommand(command.commandId)">pointer le BL</button>
+                <button mat-raised-button class="gestion--btn" (click)="openDetailDialog(command.commandId)">Detail</button>
+                <button mat-raised-button class="gestion--btn">Modifier</button>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+</div>

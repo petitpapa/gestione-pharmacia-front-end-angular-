@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Confirmation Vente</h1>
+<div mat-dialog-content>
+    <form class="flex flex-col" [formGroup]="invoiceHistoryForm">
+
+        <p class="table--row">Inserer le montant a payé, e eventuel notes a ajouter!</p>
+        <mat-form-field >
+            <mat-label>Montant payé</mat-label>
+            <input type="number" matInput placeholder="Ex. 55000" formControlName="paid">
+        </mat-form-field>
+
+        <mat-form-field >
+            <mat-label>Inserer une note </mat-label>
+            <textarea matInput placeholder="vente a credit..." formControlName="notes"></textarea>
+        </mat-form-field>
+    </form>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Annuler</button>
+    <button mat-button cdkFocusInitial (click)="onConfirm()">Confirmer la vente en cours</button>
+</div>

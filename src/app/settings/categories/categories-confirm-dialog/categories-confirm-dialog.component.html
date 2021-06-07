@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Confimer Ou Annuler</h1>
+<div mat-dialog-content class="text-xs">
+  Confirmer l'affectation de tous les produits selectionés au nouveau {{data.name}}: {{data.description}}
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button cdkFocusInitial (click)="onConfirm()">Confimer</button>
+</div>
+

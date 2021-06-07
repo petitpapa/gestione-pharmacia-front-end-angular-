@@ -1,0 +1,10 @@
+@layer components{
+    @responsive{
+      .icons--svg{
+          //width="96px" height="48px" fill="white"ù
+          width: 96px;
+          height: 48px;
+          fill: white;
+      }
+    }
+}

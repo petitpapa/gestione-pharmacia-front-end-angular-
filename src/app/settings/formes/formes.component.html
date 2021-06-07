@@ -1,0 +1,181 @@
+<div class="flex flex-col">
+  <mat-tab-group animationDuration="1000ms">
+    <mat-tab label="List des formes et produits">
+      <div class="flex w-full px-28">
+        <div class="flex flex-col items-start">
+          <h2 class="text-lg font-semibold text-gray-600">
+            Ajouter une nouvelle form
+          </h2>
+          <div class="flex items-center justify-items-centers">
+            <mat-form-field appearance="outline" class="mr-10 mt-4">
+              <mat-label>Description</mat-label>
+              <input *ngIf="!editMode" type="text" matInput placeholder="Ajouter le nom de la forme"
+                [formControl]="nameFormControl" required />
+              <input *ngIf="editMode" [(ngModel)]="toUpdate.description" matInput [formControl]="nameFormControl" />
+              <mat-error *ngIf="!editMode && nameFormControl.hasError('required')">
+                <strong>Validation requise</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <button *ngIf="!editMode" mat-flat-button color="primary" class="h-11 w-40">
+              Ajouter
+            </button>
+            <button *ngIf="editMode" mat-flat-button color="warn" class="h-11 w-40" (click)="update()">
+              Modifier
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex px-14 flex-col bg-white">
+          <div class="spinner-container" *ngIf="isLoading">
+            <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto"></mat-spinner>
+          </div>
+
+          <p *ngIf="!isLoading" class="font-mono mb-6">La Liste des formes</p>
+          <mat-form-field *ngIf="!isLoading">
+            <mat-label>Filtre</mat-label>
+            <input matInput (keyup)="applyFilterOnForms($event)" placeholder="Ex. ium" #input />
+          </mat-form-field>
+
+          <table *ngIf="!isLoading" mat-table [dataSource]="formDataSource"
+            class="mat-elevation-z8 text-gray-500 tracking-wider">
+            <ng-container class="mr-4" matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="!editMode; else elseBlock">
+                  <mat-icon matTooltip="modifier" class="btn--edit cursor mr-2" (click)="modifyCurrentRow(element)">edit
+                  </mat-icon>
+
+                  <mat-icon matTooltip="eliminer" aria-hidden="false" class="text-red-600 cursor-pointer">
+                    delete</mat-icon>
+                </div>
+                <ng-template #elseBlock>
+                  <mat-icon *ngIf="element.id !== toUpdate.id" matTooltip="modifier" class="btn--edit cursor mr-2"
+                    (click)="modifyCurrentRow(element)">edit</mat-icon>
+
+                  <mat-icon *ngIf="element.id !== toUpdate.id" matTooltip="eliminer" aria-hidden="false"
+                    class="text-red-600 cursor-pointer">
+                    delete</mat-icon>
+
+                  <mat-icon *ngIf="element.id === toUpdate.id" matTooltip="effacer"
+                    class="text-red-600 cursor-pointer mr-2" (click)="cancel()">
+                    clear</mat-icon>
+
+                  <mat-icon *ngIf="element.id === toUpdate.id" matTooltip="confirmer" aria-hidden="false"
+                    aria-label="Example home icon" class="btn--edit cursor" (click)="update()">done</mat-icon>
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container class="mr-4" matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>#</th>
+              <td mat-cell *matCellDef="let element" [ngClass]="element.id == selectedForm ? 'selected__form' : ''">
+                {{ element.id }}
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let element" [ngClass]="element.id == selectedForm ? 'selected__form' : ''">
+                {{ element.description }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="load">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" [ngClass]="element.id == selectedForm ? 'selected__form' : ''">
+                <span class="material-icons cursor-pointer" (click)="loadSelectedFormProducts(element.id)">
+                  chevron_right
+                </span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <div *ngIf="!isLoading" class="h-full flex bg-white ml-20 flex-col justify-start">
+          <p class="font-mono mb-6">
+            La Liste des produits correspondant a la forme selectionné
+          </p>
+          <mat-form-field>
+            <mat-label>Filtre</mat-label>
+            <input matInput (keyup)="applyFilterOnFormProducts($event)" placeholder="Ex. ium" #input />
+          </mat-form-field>
+
+          <table mat-table [dataSource]="formProductsDataSource" class="mat-elevation-z8 text-gray-500 tracking-wider">
+            <ng-container class="mr-4" matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>#</th>
+              <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="formProductDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: formProductDisplayedColumns"></tr>
+          </table>
+          <!--<pt-pagination-container></pt-pagination-container>-->
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Affecter les produits au rayon">
+      <div *ngIf="productFormDescriptionDs" class="flex flex-col w-full px-28 ">
+
+        <table mat-table [dataSource]="productFormDescriptionDs" class="mat-elevation-z8 mt-3 ">
+
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="description">
+            <th  class="font-bold" mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell class="text-xs text-gray-500" *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="forme">
+            <th class="font-bold" mat-header-cell *matHeaderCellDef> Forme </th>
+            <td class="text-xs text-gray-500" mat-cell *matCellDef="let element"> {{element.form.description}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="rayon">
+            <th class="font-bold" mat-header-cell *matHeaderCellDef> Rayon </th>
+            <td mat-cell class="text-xs text-gray-500" *matCellDef="let element"> {{element.rayon.description}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedProductFormDescriptionColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedProductFormDescriptionColumns;"
+            (click)="selection.toggle(row)">
+          </tr>
+
+        </table>
+
+      
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+
+</div>

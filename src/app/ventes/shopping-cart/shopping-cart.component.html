@@ -1,0 +1,33 @@
+<div class="flex">
+    <div class="flex flex-col flex-1 px-4 ">
+        <div class="text-sm mb-4"> <span class="text-gray-500">Client: </span> <span
+                class="ml-4 font-semibold tracking-widest"> {{(selectedCustomer$| async).name}}</span> </div>
+     
+        <div class="flex w-full justify-between mb-4">
+            <h3 class="table--header">Votre panier </h3>
+            <h3 class="table--header">prix</h3>
+        </div>
+
+        <div class="flex flex-col w-full">
+
+            <ul class="flex flex-col w-full">
+                <li
+                    *ngFor="let item of cartItems$| async">
+                    <app-item-row (removeItemEvent)="onRemoveItemEvent($event)" (addItemEvent)="onAddItemEvent($event)" (remiseEvent)="onRemiseEvent($event)"  [item] = "item"></app-item-row>
+                </li>
+            </ul>
+            <div class="flex self-end  border-t-2 mr-2">sous-total({{numberOfItems| async}} articles): <p
+                    class="relative price"> <span class="font-semibold ml-4"> {{total| async}}</span> <span
+                        class="absolute -top-1 currency text-red-400">FG</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex mr-2">
+        <div class="flex ml-8 mt-8 items-center">
+            <button class="text-center btn--success btn--valid tracking-wider uppercase" mat-button
+                (click)="createOrder()">Passer la
+                commande</button>
+        </div>
+    </div>
+</div>

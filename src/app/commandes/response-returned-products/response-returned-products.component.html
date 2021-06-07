@@ -1,0 +1,131 @@
+<div class="flex flex-col">
+  <div class="spinner__centered" *ngIf="isLoading; else returnedProduct">
+    <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+  </div>
+  <ng-template #returnedProduct>
+
+    <mat-tab-group mat-align-tabs="start" class="px-2">
+
+      <mat-tab label="Produits Avoir">
+
+      <app-supplier-select (onSupplierSelected)="loadAllReturnedProduct($event)" [suppliers]="suppliers"></app-supplier-select>
+
+        <div *ngIf="dataSource.data.length > 0; else NoProduct" class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> No. </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="productName">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Nom produit </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.productName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="form">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Forme </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.productForm}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="reason">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Motif </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.reason}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateOfIssue">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Date d'emmission </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.dateOfIssue}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Description </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.state| productReturnStateParser}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th class="table--header" mat-header-cell *matHeaderCellDef>  </th>
+              <td class="table--row" mat-cell *matCellDef="let element">
+                <div class="flex">
+                  <mat-icon class="cursor-pointer" (click)="openDetails(element.productId)" matTooltip="Ajouter la response du fournisseur">update</mat-icon>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator #responseAvoirsPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+
+      </mat-tab>
+
+      <!-- Second tab-->
+      <mat-tab label="Avoir retourné">
+        <app-supplier-select (onSupplierSelected)="listOfRejectedProducts($event)" [suppliers]="suppliers"></app-supplier-select>
+        <div *ngIf="rejectedProductReturnedDataSource.data.length > 0; else NoProduct" class="mat-elevation-z8">
+          <table mat-table [dataSource]="rejectedProductReturnedDataSource">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> No. </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="productName">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Nom produit </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.productName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="form">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Forme </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.productForm}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="reason">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Motif </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.reason}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateOfIssue">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Date d'emmission </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.dateOfIssue}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Qty">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Quantité retounée </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.returnedQty}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <th class="table--header" mat-header-cell *matHeaderCellDef> Description </th>
+              <td class="table--row" mat-cell *matCellDef="let element"> {{element.state| productReturnStateParser}} </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="rejectedDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: rejectedDisplayedColumns;"></tr>
+          </table>
+
+          <mat-paginator #rejectedAvoirsPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+
+
+      </mat-tab>
+
+    </mat-tab-group>
+  </ng-template>
+  <ng-template #NoProduct class="text-center">
+    <h3 class="px-24 font-semibold text-red-500">Aucun Produit</h3>
+  </ng-template>
+
+</div>

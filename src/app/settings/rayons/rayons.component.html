@@ -1,0 +1,31 @@
+<div class=" w-11/12 items-center justify-center mx-auto">
+    <p class="text-lg my-10 text-gray-500 font-semibold">Liste des rayons disponibles</p>
+   
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+    <mat-table [dataSource]="rayonDataSource" class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id" class="font-bold">
+            <mat-header-cell class="table--header" *matHeaderCellDef> No. </mat-header-cell>
+            <mat-cell class="table--row" *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell class="table--header" *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell class="table--row" *matCellDef="let element"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="codification">
+            <mat-header-cell class="table--header" *matHeaderCellDef> Codification </mat-header-cell>
+            <mat-cell class="table--row" *matCellDef="let element"> {{element.codification}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

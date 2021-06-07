@@ -1,0 +1,16 @@
+.supplier--order {
+  display: grid;
+  grid-template-columns: 1fr 200px 200px 200px;
+  width: 100%;
+}
+.invoice--detail {
+  display: grid;
+  grid-template-columns: 200px 1fr 150px 200px 250px;
+  width: 100%;
+}
+
+.invoice--subtotal {
+  display: grid;
+  grid-template-columns: 200px 1fr 600px;
+  width: 100%;
+}

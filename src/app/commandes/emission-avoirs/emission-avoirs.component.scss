@@ -1,0 +1,22 @@
+table {
+  width: 100%;
+ tr{
+    height: 32px
+  }
+}
+
+.btn--avoir{
+    font-size: 10px;
+}
+
+.quantity {
+  display: flex;
+
+  .arrow {
+    cursor: pointer;
+  }
+
+  .value {
+    margin: 0 10px;
+  }
+}

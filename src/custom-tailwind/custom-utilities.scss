@@ -1,0 +1,93 @@
+@layer utilities {
+  @responsive {
+    .scrollbars-hidden::-webkit-scrollbar {
+      display: none;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+    .scrollbars-hidden {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+    .txt--primary {
+      color: #4e9d44;
+    }
+    .bg--primary {
+      background-color: #f9fbfd;
+    }
+    .bg--secondary {
+      background-color: #002b49;
+    }
+    .warning {
+      background-color: #fda700;
+    }
+    .danger {
+      background-color: #fd5f00;
+    }
+    .info {
+      background-color: #1a86d0;
+    }
+    .fnt--primary {
+      font-family: "Nunito", sans-serif;
+    }
+    .sb__background--color {
+      background-color: #101924;
+    }
+    .icon--success {
+      color: #28a745;
+    }
+    .icon--danger {
+      color: #dc3545;
+    }
+    .icon--info {
+      color: #17a2b8;
+    }
+    .mat-raised-button {
+      color: white;
+
+      outline: none;
+
+      font-weight: 600;
+      letter-spacing: 0.08cm;
+      justify-content: center;
+      line-height: normal !important;
+      margin-right: 4px;
+      padding-top: 4px !important;
+      padding-bottom: 4px !important;
+      outline: none;
+    }
+    .btn__smallheight__bigwidth {
+      height: 24px;
+      width: 200px;
+      font-size: 10px;
+    }
+    .icon--warning {
+      color: #ffc107;
+    }
+    .btn--success {
+      background-color: #28a745;
+      color: white;
+    }
+    .table--header {
+      font-weight: 800;
+      font-size: 0.7rem /* 12px */;
+      line-height: 1rem /* 16px */;
+      text-transform: uppercase;
+    }
+    .table--row {
+      font-weight: 800;
+      font-size: 0.65rem /* 12px */;
+      line-height: 1rem /* 16px */;
+      text-transform: uppercase;
+      color: rgba(156, 163, 175, 1);
+    }
+    .content--height {
+      min-height: 90vh;
+    }
+    .spinner__centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+  }
+}

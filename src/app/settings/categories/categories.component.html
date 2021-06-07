@@ -1,0 +1,143 @@
+<div class="flex flex-col">
+    <div class="centered" *ngIf="isLoading ; else tabContent">
+        <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+    </div>
+    <ng-template #tabContent>
+        <mat-tab-group class="px-4">
+            <mat-tab label="La liste des categories de produits">
+                <div class=" w-11/12 items-center justify-center mx-auto">
+
+
+                    <mat-form-field>
+                        <mat-label>Filter</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. dietetique" #input>
+                    </mat-form-field>
+                    <mat-table [dataSource]="categoryDataSource" class="mat-elevation-z8 mt-3">
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="id" >
+                            <mat-header-cell class="font-extrabold text-xs uppercase" *matHeaderCellDef> No. </mat-header-cell>
+                            <mat-cell class="font-semibold text-xs text-gray-400" *matCellDef="let element"> {{element.id}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="description">
+                            <mat-header-cell class="font-extrabold text-xs uppercase" *matHeaderCellDef> Description </mat-header-cell>
+                            <mat-cell class="font-semibold text-xs text-gray-400" *matCellDef="let element"> {{element.decription}} </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="categoryColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: categoryColumns;"></mat-row>
+                    </mat-table>
+                    <mat-paginator #categoryPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="Liste des produits par type">
+                <div class=" h-10 text-xs">
+                    <mat-form-field appearance="fill">
+                        <mat-label class="fnt--primary">Selectioner une categorie</mat-label>
+                        <mat-select [formControl]="selectedCategoryId">
+                            <mat-option value="-1">Toutes les categories</mat-option>
+                            <mat-option *ngFor="let category of categories" value="{{category.id}}">
+                                {{category.decription}}
+                            </mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col cont">
+
+                    <table class="shadow-lg " mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                    [aria-label]="checkboxLabel()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="form">
+                            <th class="font-extrabold text-xs uppercase" mat-header-cell *matHeaderCellDef> Form </th>
+                            <td class="font-semibold text-xs text-gray-400" mat-cell *matCellDef="let element">
+                                {{element.form.description}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th class="font-extrabold text-xs uppercase" mat-header-cell *matHeaderCellDef> Name </th>
+                            <td class="font-semibold text-xs text-gray-400" mat-cell *matCellDef="let element">
+                                {{element.name}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="rayon">
+                            <th class="font-extrabold text-xs uppercase" mat-header-cell *matHeaderCellDef> Rayon </th>
+                            <td class="font-semibold text-xs text-gray-400" mat-cell *matCellDef="let element">
+                                {{element.rayon.description}} </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="famille">
+                            <th class="font-extrabold text-xs uppercase" mat-header-cell *matHeaderCellDef> Famille
+                                Thérapeutique </th>
+                            <td class="font-semibold text-xs text-gray-400" mat-cell *matCellDef="let element">
+                                {{element.therapeuticFamilly.description}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                        </tr>
+                    </table>
+                    <mat-paginator #productPaginator  [pageSizeOptions]="[8, 10]" showFirstLastButtons></mat-paginator>
+                </div>
+                <div class="flex justify-items-center items-center">
+                    <button mat-raised-button color="primary" class="text-xs btn__smallheight__bigwidth"
+                        (click)="changeCategoryForSelectedProducts()">Affecter à
+                        Type</button>
+                    <div class=" h-10 text-xs ml-16">
+                        <mat-form-field>
+                            <mat-label class="fnt--primary">categorie</mat-label>
+                            <mat-select [formControl]="changeCategoryId">
+                                <mat-option *ngFor="let category of categories" value="{{category.id}}">
+                                    {{category.decription}}
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-items-center items-center">
+                    <button mat-raised-button color="primary" class="text-xs btn__smallheight__bigwidth"
+                        (click)="changeRayonForSelectedProducts()">Affecter à
+                        Rayon</button>
+                    <div class=" h-10 text-xs ml-16">
+                        <mat-form-field>
+                            <mat-label class="fnt--primary">Rayon</mat-label>
+                            <mat-select [formControl]="selectedRayonId">
+                                <mat-option *ngFor="let rayon of rayons" value="{{rayon.id}}">
+                                    {{rayon.description}}
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </ng-template>
+</div>

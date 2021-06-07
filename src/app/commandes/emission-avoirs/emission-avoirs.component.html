@@ -1,0 +1,161 @@
+<div class="flex flex-col px-4">
+
+    <div class="spinner__centered" *ngIf="isLoading; else avoirEmis">
+        <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+    </div>
+    <ng-template #avoirEmis>
+        <div class="flex justify-between">
+            <p class="text-xs tracking-wider text-indigo-600">Emission avoirs vers fournisseur </p>
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            </mat-form-field>
+
+            <div class="flex">
+              <app-supplier-select (onSupplierSelected)="loadReturnedProductOfSupplier($event)"
+                                   [suppliers]="suppliers"></app-supplier-select>
+
+                <mat-form-field appearance="fill" class="mt-2 ml-6">
+                    <mat-label>Date d'emission</mat-label>
+                    <input [formControl]="issueDateCtrl" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+
+            </div>
+
+        </div>
+        <div class="flex flex-col  mat-elevation-z8">
+
+
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="supplierName">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Fournisseur </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.supplierName}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="date">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Date de reception </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.createdDate}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="bl">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> N° BL </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </td>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="form">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Form </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.productForm}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="productName">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.productName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="qty">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.qty}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ppv">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix de Vente </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.salePrice}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="expiryDate">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Péremption </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.expiryDate}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                    <td class="table--row" mat-cell *matCellDef="let row">
+                        <div class="flex">
+                            <mat-icon class="cursor-pointer" matTooltip="Ajouter au retour fournisseur"
+                                (click)="addToCart(row)">add</mat-icon>
+                            <mat-icon class="cursor-pointer" matTooltip="Fichier produit">dvr</mat-icon>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Pas de BL {{input.value}}</td>
+                </tr>
+            </table>
+            <mat-paginator #emissionAvoirsPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+        <mat-card *ngIf="selectedProducts.length > 0" class="mt-3">
+
+            <mat-card-header>
+                <mat-card-title class="btn--avoir text-indigo-500">Liste des produits à rendre au fournisseur
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <ul>
+                    <li>
+                        <div class="grid grid-cols-7 table--header">
+                            <p>Form</p>
+                            <p>Produit</p>
+                            <p>PPV</p>
+                            <p>Qté</p>
+                            <p>Prix Achat HT</p>
+                            <p>Péremption</p>
+                            <p>Motif avoir</p>
+                        </div>
+                    </li>
+                    <mat-divider></mat-divider>
+                    <li *ngFor="let item of selectedProducts">
+                        <div class="grid grid-cols-7 table--row">
+                            <p>{{item.productForm}}</p>
+                            <p>{{item.productName}}</p>
+                            <p>{{item.salePrice}}</p>
+                            <span class='  quantity'>
+                                <div class='arrow' (click)="removeItem(item)">
+                                    &#10094;
+                                </div>
+                                <span class='value'>{{item.emittedQty}}</span>
+                                <div class='arrow' (click)="addItem(item)">
+                                    &#10095;
+                                </div>
+                            </span>
+                            <p>{{item.unitPriceHT}}</p>
+                            <p>{{item.productExpiryDate}}</p>
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Laissez un commentaire</mat-label>
+                                <textarea matInput [(ngModel)]="item.reason"
+                                    placeholder="Ex. Erreur sur BL..."></textarea>
+                            </mat-form-field>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </li>
+
+                </ul>
+
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="flex items-center justify-between">
+                    <button class="uppercase tracking-wider font-semibold btn--avoir" color="primary" (click)="sendProductReturn()"
+                        mat-stroked-button>Valider avoir</button>
+                    <div>
+                        <p class="text-xs"> <span class="font-semibold "> Total: </span> <span class="text-red-600">
+                                {{total}} </span> </p>
+                    </div>
+                </div>
+
+            </mat-card-actions>
+        </mat-card>
+    </ng-template>
+</div>

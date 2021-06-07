@@ -1,0 +1,214 @@
+<div class="w-11/12 items-center justify-center mx-auto">
+  <button
+    *ngIf="!completeMode"
+    mat-flat-button
+    color="primary"
+    class="h-11 w-60 mt-8"
+    (click)="enableAddFournisseur()"
+  >
+    Ajouter fournisseur
+  </button>
+  <div *ngIf="completeMode" class="flex">
+    <button
+      mat-flat-button
+      color="primary"
+      class="h-11 w-60"
+      (click)="addFournisseur()"
+    >
+      Confirmer
+    </button>
+    <span class="mr-2"></span>
+    <button
+      mat-flat-button
+      color="warn"
+      class="h-11 w-60"
+      (click)="cancelAddFournisseur()"
+    >
+      effacer
+    </button>
+  </div>
+  <div *ngIf="completeMode" class="flex mt-4" [formGroup]="form">
+    <mat-form-field class="mr-2" appearance="fill">
+      <mat-label>Nom du fournisseur</mat-label>
+      <input matInput formControlName="tel" required />
+    </mat-form-field>
+
+    <mat-form-field class="mr-2" appearance="fill">
+      <mat-label>address du fournisseur</mat-label>
+      <input matInput formControlName="tel" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Numero de telephone</mat-label>
+      <input matInput formControlName="tel" required />
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-hint>Include area code</mat-hint>
+    </mat-form-field>
+  </div>
+  <p class="text-lg my-10 text-gray-500 font-semibold">
+    Liste des founisseurs disponibles
+  </p>
+
+  <div *ngIf="isLoading; else fournisseursBlock">
+    <mat-spinner
+      [diameter]="70"
+      [strokeWidth]="2"
+      class="mx-auto my-auto"
+    ></mat-spinner>
+  </div>
+  <ng-template #fournisseursBlock>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ex. ium"
+        #input
+      />
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table matSort mat-table [dataSource]="fournisseurDataSource">
+        <ng-container class="mr-4" matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!editMode; else elseBlock">
+              <mat-icon
+                matTooltip="modifier"
+                class="btn--edit cursor mr-2"
+                (click)="modifyCurrentRow(element)"
+                >edit</mat-icon
+              >
+
+              <mat-icon
+                matTooltip="eliminer"
+                aria-hidden="false"
+                class="text-red-600 cursor-pointer"
+                (click)="delete(element.id)"
+              >
+                delete</mat-icon
+              >
+            </div>
+            <ng-template #elseBlock>
+              <mat-icon
+                *ngIf="element.id !== toUpdate.id"
+                matTooltip="modifier"
+                class="btn--edit cursor mr-2"
+                (click)="modifyCurrentRow(element)"
+                >edit</mat-icon
+              >
+
+              <mat-icon
+                *ngIf="element.id !== toUpdate.id"
+                matTooltip="eliminer"
+                aria-hidden="false"
+                class="text-red-600 cursor-pointer"
+                (click)="delete(element.id)"
+              >
+                delete</mat-icon
+              >
+
+              <mat-icon
+                *ngIf="element.id === toUpdate.id"
+                matTooltip="effacer"
+                class="text-red-600 cursor-pointer mr-2"
+                (click)="cancel()"
+              >
+                clear</mat-icon
+              >
+
+              <mat-icon
+                *ngIf="element.id === toUpdate.id"
+                matTooltip="confirmer"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                class="btn--edit cursor"
+                (click)="update(element)"
+                >done
+              </mat-icon>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th class="table--header"  mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+          <td class="table--row" mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th class="table--header"  mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+          <td class="table--row" mat-cell *matCellDef="let element">
+            <div *ngIf="editMode && toUpdate.id === element.id; else nameField">
+              <mat-form-field>
+                <input
+                  matInput
+                  [(ngModel)]="toUpdate.name"
+                  [formControl]="nameFormControl"
+                />
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </div>
+            <ng-template #nameField>
+              {{ element.name }}
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="address">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+          <td class="table--row" mat-cell *matCellDef="let element">
+            <div *ngIf="editMode && toUpdate.id === element.id; else nameField">
+              <mat-form-field>
+                <input
+                  matInput
+                  [(ngModel)]="toUpdate.address"
+                  [formControl]="addressFormControl"
+                />
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </div>
+            <ng-template #nameField>
+              {{ element.address }}
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phoneNumber">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>Téléphone</th>
+          <td class="table--row" mat-cell *matCellDef="let element">
+            <div *ngIf="editMode && toUpdate.id === element.id; else nameField">
+              <mat-form-field>
+                <input
+                  matInput
+                  [(ngModel)]="toUpdate.phoneNumber"
+                  [formControl]="phoneFormControl"
+                />
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </div>
+            <ng-template #nameField>
+              {{ element.phoneNumber }}
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codeIdentication">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>
+            Code Reference
+          </th>
+          <td class="table--row" mat-cell *matCellDef="let element">
+            {{ element.codeIdentification }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </ng-template>
+</div>
