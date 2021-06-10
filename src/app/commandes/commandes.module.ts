@@ -21,11 +21,12 @@ import { ConsultationAvoirRecuComponent } from './consultation-avoir-recu/consul
 import { ReglementSupplierComponent } from './reglement-supplier/reglement-supplier.component';
 import { CommandsAvoirsComponent } from './reglement-supplier/commands-avoirs/commands-avoirs.component';
 import { FacturationComponent } from './reglement-supplier/facturation/facturation.component';
+import { FactureDialogComponent } from './reglement-supplier/facture-dialog/facture-dialog.component';
 
 
 @NgModule({
   declarations: [CommandesComponent, CreateCommandeComponent, CreateCommandDialogContainerComponent, CommandReceptionComponent,
- GestionCommandeComponent, DetailComponent, ValidateCommandesComponent, DetailDialogComponent, CommandListComponent, EmissionAvoirsComponent, ResponseReturnedProductsComponent, SuppliersListComponent, DetailsOfSupplierReturnedProductDialogComponent, ConsultationAvoirRecuComponent, ReglementSupplierComponent, CommandsAvoirsComponent, FacturationComponent],
+ GestionCommandeComponent, DetailComponent, ValidateCommandesComponent, DetailDialogComponent, CommandListComponent, EmissionAvoirsComponent, ResponseReturnedProductsComponent, SuppliersListComponent, DetailsOfSupplierReturnedProductDialogComponent, ConsultationAvoirRecuComponent, ReglementSupplierComponent, CommandsAvoirsComponent, FacturationComponent, FactureDialogComponent],
   imports: [
     CommonModule,SharedModule, ReactiveFormsModule,
     CommandesRoutingModule

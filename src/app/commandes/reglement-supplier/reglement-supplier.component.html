@@ -19,19 +19,16 @@
           <div class="mat-elevation-z8 ">
             <table mat-table [dataSource]="dataSource" matSort>
 
-              <!-- ID Column -->
               <ng-container matColumnDef="BlOrAv">
                 <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
                 <td class="table--row" [ngClass]="{'text-red-600 ': row.productReturn}" mat-cell *matCellDef="let row"> {{row.productReturn ? 'AV' : 'BL'}} </td>
               </ng-container>
 
-              <!-- Progress Column -->
               <ng-container matColumnDef="BlNumber">
                 <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Numero commande </th>
                 <td class="table--row" mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </td>
               </ng-container>
 
-              <!-- Name Column -->
               <ng-container matColumnDef="PPV">
                 <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix d'achat HT </th>
                 <td class="table--row" mat-cell *matCellDef="let row"> {{row.unitPriceHT}} </td>
@@ -109,8 +106,10 @@
         </div>
       </section>
     </div>
-    <div class="w-64 mt-4" *ngIf="commandsAvoirs?.commands?.length > 0">
+    <div class="w-3/6 mt-4 flex justify-between" *ngIf="commandsAvoirs?.commands?.length > 0">
       <button mat-raised-button color="primary" (click)="goToFacturation()">Regler Commands Fournisseur</button>
+      <button mat-raised-button class="reglement--btn" (click)="goToHistorique()">Historique</button>
+      <button mat-raised-button class="reglement--btn" (click)="goToRemise()">Remise produits</button>
     </div>
 
   </ng-template>

@@ -22,6 +22,6 @@ export const onUpdateCommandProperties = createAction(
 
 export const addReglementSupplier = createAction(
   '[command-reglement-supplier] command reglement supplier',
-  props<{ supplierCommand: {supplier: SupplierWem, cmds: Command[]} }>()
+  props<{ supplierCommand: {supplier: SupplierWem, command: Command[]} }>()
 );
 

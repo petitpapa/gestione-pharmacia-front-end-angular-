@@ -12,6 +12,7 @@ import {BaseResponse} from '../../models';
 import {CommandResponse} from '../../models';
 import {BaseModel, CoefficientResponse, ConfirmCommandRequest, SupplierResponse} from '../../models';
 import {ReturnedProductResponse} from "../../models/product.return.response";
+import {FactureByCategoryResponse} from "../../models/facture.by.category.response";
 
 @Injectable({
   providedIn: 'root'
@@ -89,10 +90,18 @@ export class CommandsService {
   loadCommandAndAvoirs(commandAvoirRequest): Observable<CommandAvoirResponse> {
     return this.http.post<CommandAvoirResponse>(this.commandBaseUrl + '/commands-and-avoirs', {
       "dateRange": {
-        "startDate":commandAvoirRequest.dateRange.startDate,
+        "startDate": commandAvoirRequest.dateRange.startDate,
         "endDate": commandAvoirRequest.dateRange.endDate
-      }, "supplierId":commandAvoirRequest.supplierId
+      }, "supplierId": commandAvoirRequest.supplierId
     }).pipe(catchError(this.handleError<any>()));
+  }
+
+  loadSupplierFactureByCategory(supplierId: string): Observable<FactureByCategoryResponse> {
+    return this.http.get<FactureByCategoryResponse>(this.commandBaseUrl + '/reglement-fournisseur/facturation/' + supplierId).pipe(catchError(this.handleError<any>()));
+  }
+
+  validateFacture(facture): Observable<BaseModel> {
+    return this.http.post(this.commandBaseUrl + '/create-facture', {...facture}).pipe(catchError(this.handleError<any>()));
   }
 
   private handleError<T>(result?: T) {

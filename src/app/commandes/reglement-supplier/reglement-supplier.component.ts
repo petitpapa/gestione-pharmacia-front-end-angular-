@@ -16,12 +16,13 @@ import {Observable, Subscription} from "rxjs";
 import {untilDestroyed, UntilDestroy} from "@ngneat/until-destroy";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {CoreState} from "../../core/store/core.reducer";
 import {Store} from "@ngrx/store";
 import {onNotificationMessage} from "../../core/store/core.actions";
 import {addReglementSupplier} from "../store/command.action";
+import {MatDialog} from "@angular/material/dialog";
+import {FactureDialogComponent} from "./facture-dialog/facture-dialog.component";
 
 @UntilDestroy()
 @Component({
@@ -137,8 +138,17 @@ export class ReglementSupplierComponent implements OnInit, OnDestroy {
 
   goToFacturation() {
     if (this.selectedSuplier) {
-      this.store.dispatch(addReglementSupplier({supplierCommand:{supplier: this.selectedSuplier, cmds: this.dataSource.data}}));
+      this.store.dispatch(addReglementSupplier({supplierCommand:{supplier: this.selectedSuplier, command: this.dataSource.data}}));
       this.router.navigate(['commandes/reglement-fournisseur/facturation']);
     }
   }
+
+  goToRemise() {
+
+  }
+
+  goToHistorique() {
+
+  }
+
 }

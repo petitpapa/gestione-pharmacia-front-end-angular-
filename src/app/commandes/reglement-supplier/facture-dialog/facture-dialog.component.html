@@ -1,0 +1,34 @@
+<h1 mat-dialog-title class="text-gray-700 text-sm tracking-widest">Validation de la facture</h1>
+<div mat-dialog-content class="text-gray-600 text-xs">
+  <div class="grid grid-cols-2 gap-10 justify-center items-center mb-10">
+    <mat-form-field appearance="fill">
+      <mat-label>Numero de la facture</mat-label>
+      <input matInput matInput [formControl]="factureFormControl" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="factureFormControl.hasError('email') && !factureFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="factureFormControl.hasError('required')">
+        Le numero de facture est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Date de la facturation</mat-label>
+      <input matInput [formControl]="factureDateCtrl" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  </div>
+
+  <div class="grid grid-cols-2 gap-10 mb-10">
+    <p>Total Facture...........................</p>
+    <p>15265</p>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuller</button>
+  <button [disabled]="!factureFormControl.valid" mat-raised-button (click)="emitFactureData()" color="primary" cdkFocusInitial>Valider</button>
+</div>
+

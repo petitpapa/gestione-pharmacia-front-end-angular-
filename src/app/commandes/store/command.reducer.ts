@@ -4,7 +4,7 @@ import * as actions from './command.action';
 import { CommandUtils } from './command.utils';
 export interface CommandState {
   selectedCommand: CommandContainer,
-  reglementSupplier?: {supplier: SupplierWem, cmds: Command[]}
+  reglementSupplier?: {supplier: SupplierWem, command: Command[]}
 }
 
 const initialState: CommandState = {
