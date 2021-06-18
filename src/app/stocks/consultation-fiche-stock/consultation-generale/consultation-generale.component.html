@@ -1,0 +1,73 @@
+<div class="grid grid-cols-2">
+
+  <div class="flex flex-col">
+    <form class="mt-4 text-xs">
+      <mat-form-field >
+        <mat-label>Produit à rechercher</mat-label>
+        <input type="text"
+               placeholder="Choisir un produit"
+               aria-label="text"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto" >
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" class="text-xs text-gray-500" >
+          <mat-option class="text-xs" *ngFor="let option of filteredOptions"   [value]="option.id +'-'+ option.name">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+    <div class="grid grid-cols-4 left-column-text mt-6" *ngIf="productInfo?.products.length > 0">
+      <p class="mb-2 text-gray-700 font-semibold ">Category: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.products[0].categoryDescription}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Forme: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.products[0].formDescription}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Rayon: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-3">{{productInfo?.products[0].rayonDescription}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Code bar: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.products[0].barcode}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Qté en cours: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.products[0].itemStockLevel}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Dernière vente: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.lastSelling}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Dernière achat: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.lastBying}}</p>
+      <mat-divider  class="mb-2"></mat-divider><mat-divider class="mb-2"></mat-divider><p class="mb-2"></p><p class="mb-2"></p>
+      <p class="mb-2 text-gray-700 font-semibold ">Moyenne de la vente: </p> <p class="col-span-3 text-gray-500 tracking-wider mb-2">{{productInfo?.sellingPriceAverage}}</p>
+    </div>
+
+  </div>
+
+
+<!-- right section begin -->
+  <div class="mat-elevation-z8 mt-24" *ngIf="productInfo && productInfo.priceAndExpirationItems.length > 0">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="date">
+        <th class="table--header" mat-header-cell *matHeaderCellDef> Peremption </th>
+        <td class="table--row" mat-cell *matCellDef="let element"> {{element.expirationDate}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="qty">
+        <th class="table--header" mat-header-cell *matHeaderCellDef> Quantité(s) </th>
+        <td class="table--row" mat-cell *matCellDef="let element"> {{element.qty}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="price">
+        <th class="table--header" mat-header-cell *matHeaderCellDef> Prix d'achat </th>
+        <td class="table--row" mat-cell *matCellDef="let element"> {{element.buyingPrice}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+</div>

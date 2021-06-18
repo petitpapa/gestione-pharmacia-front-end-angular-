@@ -1,6 +1,6 @@
-<div class="flex flex-col p-2 new--command">
-    <h3 class="font-semibold mb-4 tracking-wider">La liste des commandes</h3>
-    <table mat-table [dataSource]="commandSummaries" class="mat-elevation-z8">
+<div class="flex flex-col px-4 new--command">
+    <h3 class="font-semibold mb-4 tracking-wider text-indigo-600 font-semibold uppercase text-xs tracking-widest mt-6">La liste des commandes</h3>
+    <table mat-table [dataSource]="commandSummaries" class="mat-elevation-z8 mt-6">
 
         <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
@@ -43,6 +43,7 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
     </table>
 
 

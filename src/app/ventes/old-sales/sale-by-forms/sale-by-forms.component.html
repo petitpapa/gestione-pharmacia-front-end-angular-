@@ -1,0 +1,55 @@
+<div class="centered" *ngIf="isLoading ; else saleByForm">
+  <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+</div>
+
+
+<ng-template #saleByForm>
+  <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6">Liste jounalière des ventes période
+    du {{startDate}} au
+    {{endDate}}</p>
+  <mat-form-field class="mt-6">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilterOnSaleByProduct($event)" placeholder="Ex. paracetamol"
+           #input>
+  </mat-form-field>
+  <div class="mat-elevation-z8 mt-6">
+
+    <table mat-table [dataSource]="salesByFormsDataSource" matSort>
+
+      <ng-container matColumnDef="form">
+        <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Forme</th>
+        <td class="table--row" mat-cell *matCellDef="let row"> {{row.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="qty">
+        <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>total Qtés</th>
+        <td class="table--row" mat-cell *matCellDef="let row"> {{ row.qty}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ppv">
+        <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> total somme
+        </th>
+        <td class="table--row" mat-cell *matCellDef="let row"> {{row.ppv}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="salesByFormColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: salesByFormColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Pas de resultats "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator #saleFormsPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+
+  <div class="flex mt-10 tracking-wider">
+
+    <button class="footer-char" mat-raised-button color="primary" (click)="openQueryPeriodDialog()">Saisir la
+      periode
+    </button>
+  </div>
+</ng-template>
+

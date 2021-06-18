@@ -1,0 +1,20 @@
+
+<div class="flex flex-col px-4">
+  <ul class="flex text-gray-500 text-xs  tracking-wider font-semibold bg-gray-200 rounded-lg">
+    <li class="px-6 py-2 hover:text-">
+      <a [routerLink]="['/stockages/consultation-fichier-stock/consultation-generale']" routerLinkActive="active">Info</a>
+    </li>
+    <li class="px-6 py-2">
+      <a [routerLink]="['/stockages/consultation-fichier-stock/sale-by-product']" routerLinkActive="active">Nouveaux produits</a>
+    </li>
+    <li class="px-6 py-2">
+      <a [routerLink]="['/stockages/consultation-fichier-stock/sale-by-category']" routerLinkActive="active"> Inventaire </a>
+    </li>
+    <li class="px-6 py-2">
+      <a [routerLink]="['/stockages/consultation-fichier-stock/sale-by-form']" routerLinkActive="active"> Perimés </a>
+    </li>
+    <li class="px-6 py-2">Tombés en rupture</li>
+    <li class="px-6 py-2">Audit Mensuel</li>
+  </ul>
+  <router-outlet></router-outlet>
+</div>

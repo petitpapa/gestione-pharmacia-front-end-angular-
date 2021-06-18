@@ -19,6 +19,7 @@ import {
   MAT_DATE_LOCALE,
 } from "@angular/material/core";
 import { MATERIAL_DATE_FORMATS } from "./utils";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 @NgModule({
   declarations: [
     MainContentComponent,
@@ -31,6 +32,7 @@ import { MATERIAL_DATE_FORMATS } from "./utils";
     CommonModule,
     RouterModule,
     SharedModule,
+    NgxChartsModule,
     StoreModule.forRoot(Corereducers),
     EffectsModule.forFeature([SidebarEffects]),
     StoreDevtoolsModule.instrument({

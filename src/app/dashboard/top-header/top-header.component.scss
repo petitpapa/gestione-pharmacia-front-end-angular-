@@ -1,0 +1,41 @@
+.command{
+  background: linear-gradient(
+      45deg
+    , #4099ff, #73b4ff);
+  color: white;
+}
+
+.sale{
+  background: linear-gradient(
+      45deg
+    , #2ed8b6, #59e0c5);
+  color: #fff;
+}
+
+.revenue{
+  background: linear-gradient(
+      45deg
+    , #FFB64D, #ffcb80);
+  color: white;
+}
+
+.profit{
+  background: linear-gradient(
+      45deg
+    , #FF5370, #ff869a);
+  color: white;
+}
+.currency{
+  font-size: 8px;
+  margin-left: 1px;
+}
+
+.dash--title{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dash--number{
+  font-weight: 600;
+  font-size: 20px;
+}

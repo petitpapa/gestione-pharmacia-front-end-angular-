@@ -1,0 +1,93 @@
+<div class="flex my-6 text-xs">
+  <mat-card>
+    <mat-card-content class="flex flex-col">
+      <p class="dash--title">Proches périmés(Année en cours)</p>
+      <div>
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="peremption"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]='xAxisLabel'
+          [yAxisLabel]="yAxisLabel"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="grid grid-cols-2 gap-x-4 ml-2 w-full">
+    <mat-card>
+      <div class="flex flex-col">
+
+        <div class="flex justify-between">
+          <p>Produits expirant</p>
+          <mat-icon>sync</mat-icon>
+        </div>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom produit</th>
+              <td class="text-xs" mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date d'expiration</th>
+              <td class="text-xs text-gray-500" mat-cell *matCellDef="let element"> 2021-06-24</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[4]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </mat-card>
+
+
+    <mat-card>
+      <div class="flex flex-col">
+
+        <div class="flex justify-between">
+          <p>Produits a faible stock</p>
+          <mat-icon>sync</mat-icon>
+        </div>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom produit</th>
+              <td class="text-xs" mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date d'expiration</th>
+              <td class="text-xs text-gray-500" mat-cell *matCellDef="let element"> 2021-06-24</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[4]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </mat-card>
+
+  </div>
+</div>
+

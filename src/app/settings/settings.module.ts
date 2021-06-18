@@ -9,10 +9,11 @@ import { FormesComponent } from './formes/formes.component';
 import { RayonsComponent } from './rayons/rayons.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesConfirmDialogComponent } from './categories/categories-confirm-dialog/categories-confirm-dialog.component';
+import { ProductProposalConfigComponent } from './product-proposal-config/product-proposal-config.component';
 
 
 @NgModule({
-  declarations: [SettingsComponent, FormesComponent, RayonsComponent, CategoriesComponent, CategoriesConfirmDialogComponent],
+  declarations: [SettingsComponent, FormesComponent, RayonsComponent, CategoriesComponent, CategoriesConfirmDialogComponent, ProductProposalConfigComponent],
   imports: [
     CommonModule,FormsModule, ReactiveFormsModule, SharedModule,
     SettingsRoutingModule

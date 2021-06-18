@@ -4,10 +4,10 @@
         <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
     </div>
     <ng-template #bl>
-        <h2 class="text-gray-700 tracking-wider text-sm">List des produits siasis par date</h2>
-        <div class="flex items-center relative">
+        <h2 class="text-gray-700 text-indigo-600 font-semibold uppercase text-xs tracking-widest">List des produits siasis par date</h2>
+        <div class="flex items-center relative mt-6">
 
-            <div>
+            <div class="text-xs">
                 <mat-form-field appearance="fill">
                     <mat-label>Period</mat-label>
                     <mat-date-range-input [formGroup]="period" [rangePicker]="picker">
@@ -25,12 +25,12 @@
                 <button class="validation--btn" mat-flat-button color="primary" (click)="reload()">Valider</button>
             </div>
         </div>
-        <mat-form-field appearance="fill" class="w-2/6">
+        <mat-form-field appearance="fill" class="w-2/6 mt-6 text-xs">
             <mat-label>filtrer</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. paracetamol ou le fournisseur" #input>
         </mat-form-field>
 
-        <div class="mat-elevation-z8">
+        <div class="mat-elevation-z8 mt-6 mb-6">
             <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- ID Column -->

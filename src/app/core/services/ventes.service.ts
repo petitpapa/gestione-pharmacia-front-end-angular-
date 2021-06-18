@@ -36,7 +36,7 @@ export class VentesService extends HttpServiceRequest<CoreState> {
       .post<BaseModel>(this.baseUrl, orders)
       .pipe(catchError(this.handleError<any>()));
   }
- 
+
   suspendOrder(orders: CreateOrderRequest): Observable<BaseModel> {
     return this.http
       .post<BaseModel>(this.baseUrl + "/suspend-sale", orders)
@@ -68,6 +68,18 @@ export class VentesService extends HttpServiceRequest<CoreState> {
   loadSalesByProducts(dateRange): Observable<any> {
     return this.http
       .post<any>(this.baseUrl + "/sales-by-product-range", dateRange)
+      .pipe(catchError(this.handleError<any>()));
+  }
+
+  loadSalesByCategories(dateRange): Observable<any> {
+    return this.http
+      .post<any>(this.baseUrl + "/sales-by-category", dateRange)
+      .pipe(catchError(this.handleError<any>()));
+  }
+
+  loadSalesByForms(dateRange): Observable<any> {
+    return this.http
+      .post<any>(this.baseUrl + "/sales-by-form", dateRange)
       .pipe(catchError(this.handleError<any>()));
   }
 

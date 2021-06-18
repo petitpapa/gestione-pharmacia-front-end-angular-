@@ -6,7 +6,7 @@
           <h2 class="text-lg font-semibold text-gray-600">
             Ajouter une nouvelle form
           </h2>
-          <div class="flex items-center justify-items-centers">
+          <div class="flex items-center justify-items-centers text-xs">
             <mat-form-field appearance="outline" class="mr-10 mt-4">
               <mat-label>Description</mat-label>
               <input *ngIf="!editMode" type="text" matInput placeholder="Ajouter le nom de la forme"
@@ -17,10 +17,10 @@
               </mat-error>
             </mat-form-field>
 
-            <button *ngIf="!editMode" mat-flat-button color="primary" class="h-11 w-40">
+            <button *ngIf="!editMode" mat-raised-button color="primary" >
               Ajouter
             </button>
-            <button *ngIf="editMode" mat-flat-button color="warn" class="h-11 w-40" (click)="update()">
+            <button *ngIf="editMode" mat-raised-button color="warn"  (click)="update()">
               Modifier
             </button>
           </div>
@@ -32,7 +32,7 @@
             <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto"></mat-spinner>
           </div>
 
-          <p *ngIf="!isLoading" class="font-mono mb-6">La Liste des formes</p>
+          <p *ngIf="!isLoading" class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mb-6">La Liste des formes</p>
           <mat-form-field *ngIf="!isLoading">
             <mat-label>Filtre</mat-label>
             <input matInput (keyup)="applyFilterOnForms($event)" placeholder="Ex. ium" #input />
@@ -171,7 +171,7 @@
 
         </table>
 
-      
+
       </div>
     </mat-tab>
 

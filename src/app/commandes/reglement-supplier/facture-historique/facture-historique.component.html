@@ -1,0 +1,76 @@
+<div class="flex flex-col px-4">
+  <p class="text-indigo-600 font-semibold uppercase text-xs tracking-widest">Hostoriques des bons/avoirs du
+    fournisseur</p>
+  <div class="mt-6">
+    <button (click)="goBack()" mat-button>
+      <mat-icon aria-hidden="false">arrow_back</mat-icon>
+      <span class="tracking-widest text-gray-700">Reglement Fournisseur</span></button>
+  </div>
+
+  <p class="text-xs mt-6 font-semibold text-gray-700">
+    Fournisseur: <span class="ml-4">{{selectedSupplier?.name}}</span>
+  </p>
+
+  <mat-form-field appearance="fill" class="w-1/6 text-xs font-semibold mt-6">
+    <mat-label>Filtrer</mat-label>
+    <mat-select *ngFor="let cmd of filters">
+      <mat-option [value]="cmd.id">{{cmd.label}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <section>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="name">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Nom du produit</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiryDate">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>Péremption</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.expiryDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Total</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.total}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="salePrice">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>Prix de vente</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.salePrice}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qty">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> La qté commandée</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.qty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> La qté commandée</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unitPriceHT">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> La qté commandée</th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.unitPriceHT}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header>Payé</th>
+          <td class="table--row" mat-cell *matCellDef="let row">
+            <mat-checkbox [checked]="row.paid" [disabled]="true"></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+  </section>
+</div>

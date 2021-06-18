@@ -7,10 +7,12 @@ import { SupplierComponent } from './supplier/supplier.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormesComponent } from '../settings/formes/formes.component';
 import { SharedModule } from '../shared/shared.module';
+import { ConsultationFicheStockComponent } from './consultation-fiche-stock/consultation-fiche-stock.component';
+import { ConsultationGeneraleComponent } from './consultation-fiche-stock/consultation-generale/consultation-generale.component';
 
 
 @NgModule({
-  declarations: [StocksComponent, SupplierComponent],
+  declarations: [StocksComponent, SupplierComponent, ConsultationFicheStockComponent, ConsultationGeneraleComponent],
   imports: [
     CommonModule, ReactiveFormsModule, SharedModule,
     StocksRoutingModule

@@ -11,13 +11,13 @@ import {ResponseReturnedProductsComponent} from "./response-returned-products/re
 import {ConsultationAvoirRecuComponent} from "./consultation-avoir-recu/consultation-avoir-recu.component";
 import {ReglementSupplierComponent} from "./reglement-supplier/reglement-supplier.component";
 import {FacturationComponent} from "./reglement-supplier/facturation/facturation.component";
+import {FactureHistoriqueComponent} from "./reglement-supplier/facture-historique/facture-historique.component";
+import {GraphiqueAchatsComponent} from "./graphique-achats/graphique-achats.component";
 
 const routes: Routes = [{
   path: '', component: CommandesComponent,
   children: [
-    {
-      path: 'create-commande', component: CreateCommandeComponent
-    },
+    {path: 'create-commande', component: CreateCommandeComponent},
     { path: 'gestion-commande', component: GestionCommandeComponent },
     { path: 'command-reception', component: CommandReceptionComponent },
     { path: 'pointer-bon-commandes', component: ValidateCommandesComponent },
@@ -26,7 +26,9 @@ const routes: Routes = [{
     {path: 'reception-avoirs', component: ResponseReturnedProductsComponent},
     {path: 'product-return-already-processed', component: ConsultationAvoirRecuComponent},
     {path: 'reglement-fournisseur', component: ReglementSupplierComponent},
-    {path: 'reglement-fournisseur/facturation', component: FacturationComponent}
+    {path: 'reglement-fournisseur/facturation', component: FacturationComponent},
+    {path: 'reglement-fournisseur/historiques', component: FactureHistoriqueComponent},
+    {path: 'graphiques-achats', component: GraphiqueAchatsComponent}
   ]
 }];
 

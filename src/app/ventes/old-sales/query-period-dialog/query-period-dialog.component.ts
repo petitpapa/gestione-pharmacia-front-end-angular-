@@ -7,7 +7,7 @@ import { DateRangeResponse, MessageType, SaleQueryPeriodWem } from "../../../cor
 import { VentesService } from "../../../core/services";
 import { onNotificationMessage } from "../../../core/store/core.actions";
 import { CoreState } from "../../../core/store/core.reducer";
-import { DateUtils } from "../../../core/utils/date.utils";
+
 @Component({
   selector: "app-query-period-dialog",
   templateUrl: "./query-period-dialog.component.html",
@@ -18,7 +18,7 @@ export class QueryPeriodDialogComponent implements OnInit, OnDestroy {
   subscriptions$: Subscription[] = [];
 
   selectedQueryPeriod = new FormControl();
-  
+
   startDate = new FormControl(new Date());
   endDate = new FormControl(new Date());
   constructor(
@@ -73,7 +73,7 @@ export class QueryPeriodDialogComponent implements OnInit, OnDestroy {
       }
     });
   }
- 
+
   sendDateRange(): void {
     this.dialogRef.close({startDate: new Date(this.startDate.value), endDate: new Date(this.endDate.value)});
   }

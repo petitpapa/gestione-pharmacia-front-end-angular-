@@ -13,6 +13,7 @@ import {CommandResponse} from '../../models';
 import {BaseModel, CoefficientResponse, ConfirmCommandRequest, SupplierResponse} from '../../models';
 import {ReturnedProductResponse} from "../../models/product.return.response";
 import {FactureByCategoryResponse} from "../../models/facture.by.category.response";
+import {SupplierCommandHistoriesResponse} from "../../models/supplier.command.histories";
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,10 @@ export class CommandsService {
 
   loadSupplierFactureByCategory(supplierId: string): Observable<FactureByCategoryResponse> {
     return this.http.get<FactureByCategoryResponse>(this.commandBaseUrl + '/reglement-fournisseur/facturation/' + supplierId).pipe(catchError(this.handleError<any>()));
+  }
+
+  commandsHistories(supplierId: string): Observable<SupplierCommandHistoriesResponse>{
+    return this.http.get<SupplierCommandHistoriesResponse>(this.commandBaseUrl + '/reglement-fournisseur/histories/' + supplierId).pipe(catchError(this.handleError<any>()));
   }
 
   validateFacture(facture): Observable<BaseModel> {

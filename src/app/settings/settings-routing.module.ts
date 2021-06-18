@@ -4,6 +4,7 @@ import { SettingsComponent } from './settings.component';
 import { FormesComponent } from './formes/formes.component';
 import { RayonsComponent } from './rayons/rayons.component';
 import { CategoriesComponent } from './categories/categories.component';
+import {ProductProposalConfigComponent} from "./product-proposal-config/product-proposal-config.component";
 
 
 const routes: Routes = [{
@@ -12,7 +13,8 @@ const routes: Routes = [{
       path: 'all-formes', component: FormesComponent
     },
     { path: 'rayons', component: RayonsComponent },
-    {path: 'categories', component: CategoriesComponent}
+    {path: 'categories', component: CategoriesComponent},
+    {path:'products/proposals', component: ProductProposalConfigComponent}
 
   ]
 }];

@@ -1,33 +1,33 @@
 <div class="w-11/12 items-center justify-center mx-auto">
-  <button
-    *ngIf="!completeMode"
-    mat-flat-button
-    color="primary"
-    class="h-11 w-60 mt-8"
-    (click)="enableAddFournisseur()"
-  >
-    Ajouter fournisseur
-  </button>
-  <div *ngIf="completeMode" class="flex">
+  <div class="mt-6 text-xs">
     <button
-      mat-flat-button
+      *ngIf="!completeMode"
+      mat-raised-button
       color="primary"
-      class="h-11 w-60"
+      (click)="enableAddFournisseur()"
+    >
+      Ajouter fournisseur
+    </button>
+  </div>
+
+  <div *ngIf="completeMode" class="flex text-xs">
+    <button
+      mat-raised-button
+      color="primary"
       (click)="addFournisseur()"
     >
       Confirmer
     </button>
     <span class="mr-2"></span>
     <button
-      mat-flat-button
+      mat-raised-button
       color="warn"
-      class="h-11 w-60"
       (click)="cancelAddFournisseur()"
     >
       effacer
     </button>
   </div>
-  <div *ngIf="completeMode" class="flex mt-4" [formGroup]="form">
+  <div *ngIf="completeMode" class="flex mt-4 text-xs" [formGroup]="form">
     <mat-form-field class="mr-2" appearance="fill">
       <mat-label>Nom du fournisseur</mat-label>
       <input matInput formControlName="tel" required />
@@ -45,7 +45,7 @@
       <mat-hint>Include area code</mat-hint>
     </mat-form-field>
   </div>
-  <p class="text-lg my-10 text-gray-500 font-semibold">
+  <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider my-6 text-gray-500 ">
     Liste des founisseurs disponibles
   </p>
 

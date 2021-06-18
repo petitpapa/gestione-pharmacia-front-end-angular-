@@ -1,11 +1,11 @@
 <div class=" w-11/12 items-center justify-center mx-auto">
-    <p class="text-lg my-10 text-gray-500 font-semibold">Liste des rayons disponibles</p>
-   
+    <p class='text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6'>Liste des rayons disponibles</p>
+
     <mat-form-field>
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
     </mat-form-field>
-    <mat-table [dataSource]="rayonDataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="rayonDataSource" class="mat-elevation-z8 mt-6">
         <!-- Position Column -->
         <ng-container matColumnDef="id" class="font-bold">
             <mat-header-cell class="table--header" *matHeaderCellDef> No. </mat-header-cell>

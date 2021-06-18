@@ -106,10 +106,16 @@
         </div>
       </section>
     </div>
-    <div class="w-3/6 mt-4 flex justify-between" *ngIf="commandsAvoirs?.commands?.length > 0">
-      <button mat-raised-button color="primary" (click)="goToFacturation()">Regler Commands Fournisseur</button>
-      <button mat-raised-button class="reglement--btn" (click)="goToHistorique()">Historique</button>
-      <button mat-raised-button class="reglement--btn" (click)="goToRemise()">Remise produits</button>
+    <div class="w-3/6 mt-4 flex justify-between">
+      <div  *ngIf="commandsAvoirs?.commands?.length > 0">
+        <button mat-raised-button color="primary" (click)="goToFacturation()">Regler Commands Fournisseur</button>
+      </div>
+
+      <div class="flex" *ngIf="selectedSuplier">
+        <button mat-raised-button class="reglement--btn" (click)="goToHistorique()">Historique</button>
+        <button mat-raised-button class="reglement--btn" (click)="goToRemise()">Remise produits</button>
+      </div>
+
     </div>
 
   </ng-template>

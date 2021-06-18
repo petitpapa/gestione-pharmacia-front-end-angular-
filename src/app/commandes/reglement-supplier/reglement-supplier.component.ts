@@ -148,7 +148,10 @@ export class ReglementSupplierComponent implements OnInit, OnDestroy {
   }
 
   goToHistorique() {
-
+    if (this.selectedSuplier) {
+      this.store.dispatch(addReglementSupplier({supplierCommand: {supplier: this.selectedSuplier, command: []}}));
+      this.router.navigateByUrl('commandes/reglement-fournisseur/historiques');
+    }
   }
 
 }

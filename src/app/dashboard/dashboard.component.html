@@ -1,0 +1,24 @@
+<div class="flex flex-col px-2">
+  <app-top-header></app-top-header>
+
+  <div class="grid grid-cols-2 gap-x-4 mt-6">
+
+    <div class="flex ">
+      <mat-card>
+        <mat-card-content>
+          <app-top-ten-pie-chart></app-top-ten-pie-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="flex w-full text-xs">
+      <mat-card class="w-full">
+        <app-top-ten-table></app-top-ten-table>
+      </mat-card>
+    </div>
+  </div>
+
+  <app-peremption-bar></app-peremption-bar>
+  <app-sale-overview></app-sale-overview>
+
+</div>

@@ -1,5 +1,7 @@
 <div class="flex flex-col px-4">
-  <div *ngIf="dataSource.data.length > 0; else NoProduct" class="mat-elevation-z8">
+  <h2 class="text-gray-700 text-indigo-600 font-semibold uppercase text-xs tracking-widest">Consultations avoirs reçus</h2>
+
+  <div *ngIf="dataSource.data.length > 0; else NoProduct" class="mat-elevation-z8 mt-6">
     <table mat-table [dataSource]="dataSource">
 
       <!-- Position Column -->
