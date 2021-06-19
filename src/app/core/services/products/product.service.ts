@@ -45,4 +45,8 @@ export class ProductService {
   loadProductDetail(productId: number): Observable<ProductDetailResponse> {
     return this.http.get<ProductDetailResponse>(this.baseUrl.concat("/").concat(productId.toString()).concat("/detail")).pipe();
   }
+
+  loadProductsBetweenRange(startDate, endDate): Observable<ProductDetailResponse>{
+    return this.http.post<ProductDetailResponse>(this.baseUrl +'/between-range', {"startDate": startDate, "endDate": endDate}).pipe(catchError(this.handleError<ProductDetailResponse>()));
+  }
 }

@@ -1,0 +1,52 @@
+<div class="px-4 flex flex-col" >
+  <div class="mt-6 flex justify-items-center items-center">
+    <app-date-picker-two-range (onStartDateChange)="updateStartDate($event)" (onEndDateChange)="loadProducts($event)" ></app-date-picker-two-range>
+  </div>
+
+
+
+    <div class="spinner__centered" *ngIf="isLoading; else proposal">
+      <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+    </div>
+
+    <ng-template #proposal>
+      <div class="mat-elevation-z8 mt-6">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="form">
+            <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Form </th>
+            <td class="table--row" [ngClass]="{'text-red-600 ': row.form}" mat-cell *matCellDef="let row"> {{row.formDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="product" >
+            <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+            <td class="table--row" mat-cell *matCellDef="let row"> {{row.productName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="familly">
+            <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Famille Therapeutique </th>
+            <td class="table--row" mat-cell *matCellDef="let row"> {{row.therapeuticFamillyDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="codeBar">
+            <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Code bare </th>
+            <td class="table--row" mat-cell *matCellDef="let row"> {{row.barcode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rayon">
+            <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Rayon</th>
+            <td class="table--row" mat-cell *matCellDef="let row"> {{row.rayonDescription}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+        </table>
+
+        <mat-paginator #newProductsPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+    </ng-template>
+
+
+</div>
