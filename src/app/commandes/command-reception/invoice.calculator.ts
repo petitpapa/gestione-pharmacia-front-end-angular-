@@ -9,7 +9,7 @@ export class InvoiceCalculatore {
   }
 
   static totalOfInvoice(items: CommandItem[]): number{
-    const salesPrice: number[] = _.map(items, (i: CommandItem) => i.supplierPrice * i.commandQuantity);
+    const salesPrice: number[] = _.map(items, (i: CommandItem) => i.unitPriceTTC * i.commandQuantity);
     return _.reduce(salesPrice, function (sum: number, s) { return sum + Number(s); }, 0);
   }
 
@@ -34,14 +34,15 @@ export class InvoiceCalculatore {
   static calculateSellingPriceTTC(prixDeVente: number, tva: number): number {
     return _.round(prixDeVente * (1 + tva / 100), 2);
   }
-  
+
   static applyDiscount(productPrice: number, discount:number): number{
     return _.round(productPrice * (1 - discount / 100),2);
   }
 
   //----new methods ----
   static calculateSalePrice(saleRequest: SellingPriceModel): number {
-    return _.round(saleRequest.productPrice * (1 + saleRequest.tva / 100) * saleRequest.multiplicator + saleRequest.fee,2);
+    console.log('=============> ', saleRequest)
+    return _.round(saleRequest.productPrice * (1 + saleRequest.tva / 100) * saleRequest.multiplicator  + saleRequest.margin,2);
   }
 
   static calculateUnitPrice(productPrice: number, tva: number): number {

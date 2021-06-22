@@ -10,6 +10,7 @@ import { catchError } from 'rxjs/operators';
 import {ProductResponse } from '../../../core/models/product.response';
 import {ProductOrderingProposalResponse} from "../../models/product.proposal.response";
 import {BaseModel, ProductDetailResponse} from "../../models";
+import {ProductInventoriesResponse} from "../../models/products.inventories.response";
 @Injectable({
   providedIn: "root",
 })
@@ -23,6 +24,10 @@ export class ProductService {
 
   loadProductsForProposal(): Observable<ProductOrderingProposalResponse>{
     return this.http.get<ProductOrderingProposalResponse>(this.baseUrl+ '/proposals').pipe(catchError(this.handleError<ProductOrderingProposalResponse>()));
+  }
+
+  loadInventories(numberOfMonths): Observable<ProductInventoriesResponse>{
+    return this.http.post<ProductInventoriesResponse>(this.baseUrl+ '/products-inventories', {numberOfMonths}).pipe(catchError(this.handleError<ProductInventoriesResponse>()));
   }
 
   private handleError<BaseModel>(result?: BaseModel) {

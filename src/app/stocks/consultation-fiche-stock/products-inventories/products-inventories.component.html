@@ -1,0 +1,84 @@
+<div class="px-4">
+    <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6">
+      Liste inventaoire des dernières periodes
+    </p>
+  <div>
+    <mat-form-field class="text-xs">
+      <mat-label>Period de calcul</mat-label>
+      <input [formControl]="numberOfMonthsCtrl" min="1" type="number" matInput placeholder="Ex. 4" >
+    </mat-form-field>
+    <span class="text-gray-600 text-xs">dernier mois</span> <span (click)="actualiser()" class="ml-10 cursor-pointer" matTooltip="Actualiser"><mat-icon >autorenew</mat-icon></span>
+  </div>
+
+
+  <div class="spinner__centered" *ngIf="isLoading; else productInv">
+    <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+  </div>
+
+  <ng-template #productInv>
+    <div class="mat-elevation-z8 mt-6">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="form">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Forme </th>
+          <td class="table--row" [ngClass]="{'text-red-600 ': row.form}" mat-cell *matCellDef="let row"> {{row.form}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.product}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="initial">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Stock de la Veille </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="sell">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Quantités(s) vendue(s) </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.qtySell}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="return">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté(s) retournée(s) </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.returnedQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="purchase">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté(s) achetée(s) </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.purchaseQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="issue">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté avoir emis </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.max}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="final">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté Stock </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.stockLevel}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="couverture">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Jours de couverture </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.inventoryDays}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data.
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+        -->
+      </table>
+
+      <mat-paginator #proposalPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+  </ng-template>
+
+
+</div>

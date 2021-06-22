@@ -10,10 +10,11 @@ import { SharedModule } from '../shared/shared.module';
 import { ConsultationFicheStockComponent } from './consultation-fiche-stock/consultation-fiche-stock.component';
 import { ConsultationGeneraleComponent } from './consultation-fiche-stock/consultation-generale/consultation-generale.component';
 import { NewProductsComponent } from './consultation-fiche-stock/new-products/new-products.component';
+import { ProductsInventoriesComponent } from './consultation-fiche-stock/products-inventories/products-inventories.component';
 
 
 @NgModule({
-  declarations: [StocksComponent, SupplierComponent, ConsultationFicheStockComponent, ConsultationGeneraleComponent, NewProductsComponent],
+  declarations: [StocksComponent, SupplierComponent, ConsultationFicheStockComponent, ConsultationGeneraleComponent, NewProductsComponent, ProductsInventoriesComponent],
   imports: [
     CommonModule, ReactiveFormsModule, SharedModule,
     StocksRoutingModule

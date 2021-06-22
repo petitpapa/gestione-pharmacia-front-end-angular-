@@ -5,6 +5,7 @@ import {SupplierComponent} from './supplier/supplier.component';
 import {ConsultationFicheStockComponent} from "./consultation-fiche-stock/consultation-fiche-stock.component";
 import {ConsultationGeneraleComponent} from "./consultation-fiche-stock/consultation-generale/consultation-generale.component";
 import {NewProductsComponent} from "./consultation-fiche-stock/new-products/new-products.component";
+import {ProductsInventoriesComponent} from "./consultation-fiche-stock/products-inventories/products-inventories.component";
 
 
 const routes: Routes = [{
@@ -14,7 +15,8 @@ const routes: Routes = [{
       path: 'consultation-fichier-stock', component: ConsultationFicheStockComponent, children: [
         {path: '', redirectTo: 'consultation-generale'},
         {path: 'consultation-generale', component: ConsultationGeneraleComponent},
-        {path: 'new-products', component: NewProductsComponent}
+        {path: 'new-products', component: NewProductsComponent},
+        {path: 'products-inventories', component: ProductsInventoriesComponent}
       ]
     }
   ]

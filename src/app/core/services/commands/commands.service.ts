@@ -41,7 +41,7 @@ export class CommandsService {
   }
 
   loadNewCommandsByStatus(status: string): Observable<CommandResponse> {
-    return this.http.post<CommandResponse>(this.commandBaseUrl + '/new-commands', {status: status}, this.httpOptions);
+    return this.http.post<CommandResponse>(this.commandBaseUrl + '/new-commands', {status: status}, this.httpOptions).pipe(catchError(this.handleError<any>()));;
   }
 
   loadCommandById(id: number): Observable<CommandResponse> {

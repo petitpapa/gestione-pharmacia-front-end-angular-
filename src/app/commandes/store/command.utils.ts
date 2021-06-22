@@ -22,7 +22,6 @@ export class CommandUtils {
     cmd.deliveryDate = properties.deliveryDate;
     cmd.invoiceNumber = properties.invoiceNumber;
     cmd.totalAmount = properties.totalAmount;
-    cmd.totalDiscount = properties.totalDiscount;
     return cmd;
   }
 

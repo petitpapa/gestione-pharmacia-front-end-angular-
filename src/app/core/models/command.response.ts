@@ -14,6 +14,7 @@ export class CommandItem {
   unitSalePrice: number;
   discount: number;
   expiryDate: Date;
+  margin: number;
 }
 
 export class CommandContainer {
@@ -27,7 +28,7 @@ export class CommandContainer {
   invoiceNumber: number;
   totalAmount: number;
   deliveryDate: Date;
-  totalDiscount: number;
+  fees: number;
 }
 
 export class CommandResponse {

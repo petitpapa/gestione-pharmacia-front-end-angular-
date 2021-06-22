@@ -95,6 +95,7 @@ export class GestionCommandeComponent implements OnInit, OnDestroy {
 
   gotToRecptionPage(id: number): void {
     const cmd = this.commands.containers.find((c) => c.commandId === id);
+    console.log(cmd);
     this.store.dispatch(onCommandSelected({ command: cmd }));
     this.router.navigateByUrl("/commandes/command-reception");
   }

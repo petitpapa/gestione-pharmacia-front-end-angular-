@@ -1,32 +1,33 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { select, Store } from "@ngrx/store";
-import { Subscription } from "rxjs";
+import {select, Store} from "@ngrx/store";
+import {Subscription} from "rxjs";
 import {
   CoefficientWem,
   CommandContainer,
   CommandItem,
   MessageType,
 } from "../../core/models";
-import { CoreState } from "../../core/store/core.reducer";
-import { getSelectedCommand } from "../store/command.selectors";
+import {CoreState} from "../../core/store/core.reducer";
+import {getSelectedCommand} from "../store/command.selectors";
 import {
   onUpdateCommandItem,
   onAddCommandItem,
   onUpdateCommandProperties,
 } from "../store/command.action";
-import { InvoiceCalculatore } from "./invoice.calculator";
-import { FileUploaderUtils } from "./FileUploader";
-import { CommandsService } from "../../core/services";
+import {InvoiceCalculatore} from "./invoice.calculator";
+import {FileUploaderUtils} from "./FileUploader";
+import {CommandsService} from "../../core/services";
 import * as _ from "lodash-es";
-import { momentForDate, Utils } from "../../core/utils";
-import { onNotificationMessage } from "../../core/store/core.actions";
-import { Router } from "@angular/router";
+import {momentForDate, Utils} from "../../core/utils";
+import {onNotificationMessage} from "../../core/store/core.actions";
+import {Router} from "@angular/router";
+
 @Component({
   selector: "app-command-reception",
   templateUrl: "./command-reception.component.html",
@@ -45,6 +46,7 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
   discount = 0;
   fees = 0;
   tva = 0;
+  margin = 0;
 
   coefficients: CoefficientWem[] = [];
 
@@ -52,14 +54,18 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
 
   totalSalePrice = 0;
   totalInvoice = 0;
-  tvaCtrl = new FormControl("", { updateOn: "blur" });
+  tvaCtrl = new FormControl("", {updateOn: "blur"});
   supplierPriceCtrl = new FormControl("", {
     validators: [Validators.required],
     updateOn: "blur",
   });
+  marginCtrl = new FormControl("", {
+    validators: [Validators.required],
+    updateOn: "blur",
+  });
   priceUnitTTCtrl = new FormControl("", Validators.required);
-  feeCtrl = new FormControl("", { updateOn: "blur" });
-  discountCtrl = new FormControl("", { updateOn: "blur" });
+  feeCtrl = new FormControl("", {updateOn: "blur"});
+  discountCtrl = new FormControl("", {updateOn: "blur"});
   priceWithTvaAppliedCtrl = new FormControl("", {
     validators: [Validators.required],
     updateOn: "blur",
@@ -76,13 +82,15 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private service: CommandsService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.onSupplierPriceChange();
     this.onFeeChange();
     this.onDiscountChange();
     this.onTvaChange();
+    this.onMarginChange();
 
     const coefSub = this.service.loadCoefficients().subscribe((cm) => {
       this.coefficients = cm.container.coefficients;
@@ -107,6 +115,8 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     const sub = this.supplierPriceCtrl.valueChanges.subscribe((newPrice) => {
       this.selectedSupplierPrice = newPrice;
       this.updateUnitPriceTTC();
+      this.calculateTotalInvoice();
+      this.calculateTotalPriceSale();
     });
     this.subscriptions.push(sub);
   }
@@ -115,6 +125,8 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     const sub = this.tvaCtrl.valueChanges.subscribe((newTva) => {
       this.tva = newTva;
       this.updateUnitPriceTTC();
+      this.calculateTotalInvoice();
+      this.calculateTotalPriceSale();
     });
     this.subscriptions.push(sub);
   }
@@ -123,8 +135,8 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     const sub = this.feeCtrl.valueChanges.subscribe((newFee) => {
       this.fees = newFee;
       this.updateUnitPriceTTC();
-      this.calculateTotalInvoice();
-      this.calculateTotalPriceSale();
+      this.totalInvoice =  this.calculateTotalInvoice();
+      this.totalSalePrice = this.calculateTotalPriceSale();
     });
     this.subscriptions.push(sub);
   }
@@ -133,19 +145,38 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     const sub = this.discountCtrl.valueChanges.subscribe((newDiscount) => {
       this.discount = newDiscount;
       this.updateUnitPriceTTC();
-      this.totalInvoice = this.calculateTotalInvoice();
+      this.totalInvoice =  this.calculateTotalInvoice();
+      this.totalSalePrice = this.calculateTotalPriceSale();
+    });
+    this.subscriptions.push(sub);
+  }
+
+  private onMarginChange() {
+    const sub = this.marginCtrl.valueChanges.subscribe((newMargin) => {
+      this.margin = newMargin;
+      const salePrice = InvoiceCalculatore.calculateSalePrice({
+        tva: this.tva,
+        productPrice: this.selectedSupplierPrice,
+        multiplicator: this.selectedCoefficient,
+        margin: +this.margin
+      });
+
+      this.priceWithTvaAppliedCtrl.setValue(salePrice);
+
+      this.totalInvoice =  this.calculateTotalInvoice();
+      this.totalSalePrice = this.calculateTotalPriceSale();
     });
     this.subscriptions.push(sub);
   }
 
   private updateUnitPriceTTC() {
     const salePrice = InvoiceCalculatore.calculateSalePrice({
-      fee: this.fees,
       tva: this.tva,
       productPrice: this.selectedSupplierPrice,
       multiplicator: this.selectedCoefficient,
+      margin: +this.margin
     });
-   
+
     this.priceUnitTTCtrl.setValue(
       _.round(
         InvoiceCalculatore.calculateUnitPrice(
@@ -162,23 +193,23 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     this.priceFormGroup = this._formBuilder.group({
       tva: this.tvaCtrl,
       supplierPrice: this.supplierPriceCtrl,
-      fees: this.feeCtrl,
       unitPriceTTC: this.priceUnitTTCtrl,
       unitSalePrice: this.priceWithTvaAppliedCtrl,
       discount: this.discountCtrl,
+      margin: this.marginCtrl
     });
   }
 
   private initProductForm() {
     this.productFormGroup = this._formBuilder.group({
       commandQuantity: ["", Validators.required],
-      expiryDate: new FormControl(momentForDate(), Validators.required),
+      expiryDate: new FormControl(new Date(), Validators.required),
     });
   }
 
   private initCommandForm() {
     this.commandFormGroup = this._formBuilder.group({
-      deliveryDate: new FormControl(momentForDate(), Validators.required),
+      deliveryDate: new FormControl(new Date(), Validators.required),
       invoiceNumber: ["", Validators.required],
       totalDiscount: this.discountCtrl,
     });
@@ -250,7 +281,7 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
       this.priceFormGroup.value
     );
     newItem.priceMultiplicator = this.selectedCoefficient;
-    this.store.dispatch(onUpdateCommandItem({ item: newItem }));
+    this.store.dispatch(onUpdateCommandItem({item: newItem}));
 
     this.totalSalePrice = this.calculateTotalPriceSale();
     this.totalInvoice = this.calculateTotalInvoice();
@@ -278,24 +309,24 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
 
   calculateTotalPriceSale(): number {
     return _.round(
-      InvoiceCalculatore.totalSalePrice(this.selectedCommand.items),
+      InvoiceCalculatore.totalSalePrice(this.selectedCommand.items) ,
       2
     );
   }
 
   calculateTotalInvoice(): number {
     return _.round(
-      InvoiceCalculatore.applyDiscount(
-        InvoiceCalculatore.totalOfInvoice(this.selectedCommand.items),
-        this.discount
-      ),
+      //  InvoiceCalculatore.applyDiscount(
+      InvoiceCalculatore.totalOfInvoice(this.selectedCommand.items)
+      // this.discount)
+      ,
       2
     );
   }
 
   validCommand(): void {
     this.store.dispatch(
-      onUpdateCommandProperties({ properties: this.commandFormGroup.value })
+      onUpdateCommandProperties({properties: this.commandFormGroup.value})
     );
     const items = this.selectedCommand.items.map((item) => {
       return this.createItemToSend(item);
@@ -360,6 +391,7 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
   private createItemToSend(item: CommandItem) {
     const filteredItem: any = {};
     filteredItem.productId = item.productId;
+    filteredItem.discount = item.discount;
     filteredItem.commandQuantity = Utils.convertNumberTodefaultIfNull(
       item.commandQuantity
     );
@@ -385,6 +417,7 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
     filteredItem.unitSalePrice = Utils.convertNumberTodefaultIfNull(
       item.unitSalePrice
     );
+    filteredItem.margin = Utils.convertNumberTodefaultIfNull(item.margin);
 
     return filteredItem;
   }
@@ -403,7 +436,7 @@ export class CommandReceptionComponent implements OnInit, OnDestroy {
   }
 
   duplicateItem(item): void {
-    this.store.dispatch(onAddCommandItem({ item: item }));
+    this.store.dispatch(onAddCommandItem({item: item}));
     this.numberOfItems$ = this.selectedCommand.items.length;
   }
 
