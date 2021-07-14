@@ -23,3 +23,4 @@ export * from './customer.request';
 export * from './product.detail';
 export * from './selling.price.model';
 export * from './command.avoir.response';
+export * from './product.inventory.request.ts';

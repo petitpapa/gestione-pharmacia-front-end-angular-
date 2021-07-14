@@ -27,3 +27,8 @@ export const selectCurrentIndex = createSelector(
   selectCoreState,
   (s) => s.pagination.currentIndex
 );
+
+export const selectNextOpeningCashFund = createSelector(
+  selectCoreState,
+  (s) => s.nextOpeningCashFund
+)

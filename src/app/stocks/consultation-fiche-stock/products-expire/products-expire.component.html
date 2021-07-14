@@ -1,0 +1,57 @@
+<div class="px-4">
+
+  <div class="spinner__centered" *ngIf="isLoading; else proposal">
+    <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+  </div>
+
+  <ng-template #proposal>
+    <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6">
+      Produits sur le point d'expirer
+    </p>
+
+    <p class="text-xs font-semibold text-gray-600 mt-6">Proche périmés a <span class="text-red-500">{{numberOfMonth}}</span>  mois (produits en rouge sont dejà expirés mais existe stocker encore )</p>
+
+    <div class="mat-elevation-z8 mt-6">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="form">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Forme </th>
+          <td [ngClass]="{'product__expired': row.alreadyExpired, 'table--row': !row.alreadyExpired}" mat-cell *matCellDef="let row"> {{row.form}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+          <td [ngClass]="{'product__expired': row.alreadyExpired, 'table--row': !row.alreadyExpired}" mat-cell *matCellDef="let row"> {{row.product}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiresOn">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Péremption </th>
+          <td [ngClass]="{'product__expired': row.alreadyExpired, 'table--row': !row.alreadyExpired}" mat-cell *matCellDef="let row"> {{row.expiresOn}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="ppv">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix de vente </th>
+          <td [ngClass]="{'product__expired': row.alreadyExpired, 'table--row': !row.alreadyExpired}" mat-cell *matCellDef="let row"> {{row.ppv}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qty">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Quantitée(s) </th>
+          <td [ngClass]="{'product__expired': row.alreadyExpired, 'table--row': !row.alreadyExpired}" mat-cell *matCellDef="let row"> {{row.qty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplier">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Fournisseur </th>
+          <td [ngClass]="{'product__expired': row.alreadyExpired, 'table--row': !row.alreadyExpired}" mat-cell *matCellDef="let row"> {{row.supplier}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+      <mat-paginator #expirePaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+  </ng-template>
+</div>

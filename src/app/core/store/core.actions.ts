@@ -20,3 +20,8 @@ export const onFirstAndLastPageState = createAction(
   "[PaginationContainer] first and last page state",
   props<{ isFirst: boolean; isLast: boolean }>()
 );
+
+export const onNextOpeningCashFund = createAction(
+  "[daily-income-expense] nextOpeningCashFund",
+  props<{ openingCashFund: number }>()
+);

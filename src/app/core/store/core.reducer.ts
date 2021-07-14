@@ -1,9 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
-import { MessageType } from '../models/message.type';
+import { MessageType } from "../models/message.type";
 import * as fronCoreActions from "./core.actions";
 
 export interface CoreState {
   sidebarExpanded: boolean;
+  nextOpeningCashFund: number;
   notification: {
     msgType: MessageType;
     notificationMessage: string;
@@ -17,6 +18,7 @@ export interface CoreState {
 
 const initialState: CoreState = {
   sidebarExpanded: false,
+  nextOpeningCashFund: 0,
   notification: {
     msgType: MessageType.INFO,
     notificationMessage: "",
@@ -46,5 +48,10 @@ export const reducer_core = createReducer(
       isFirst: false,
       isLast: false,
     },
+  })),
+
+  on(fronCoreActions.onNextOpeningCashFund, (state, action) => ({
+    ...state,
+    nextOpeningCashFund: action.openingCashFund,
   }))
 );

@@ -1,0 +1,16 @@
+
+<div class="flex flex-col px-4">
+  <ul class="flex text-gray-500 text-xs  tracking-wider font-semibold bg-gray-200 rounded-lg">
+    <li class="px-6 py-2 hover:text-">
+      <a [routerLink]="['/stockages/audit-general/audit-stock']" routerLinkActive="active">Audit Stock</a>
+    </li>
+    <li class="px-6 py-2">
+      <a [routerLink]="['/stockages/audit-general/audit-previous-month']" routerLinkActive="active">Stock mois-1</a>
+    </li>
+    <li class="px-6 py-2">
+      <a [routerLink]="['/stockages/audit-general/audit-last-day']" routerLinkActive="active"> Stock jour-1 </a>
+    </li>
+
+  </ul>
+  <router-outlet></router-outlet>
+</div>

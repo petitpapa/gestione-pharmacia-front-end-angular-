@@ -1,0 +1,33 @@
+<div class="px-4 text-xs mx-auto bg-white py-10 mt-6 w-5/6 rounded-lg shadow-lg">
+    <p class="my-6 px-10 text-indigo-600 font-semibold uppercase text-xs tracking-wider">Opération recettes/depenses</p>
+    <form class="flex w-3/6 flex-col mt-6  px-10" [formGroup]="operationFormGroup" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>Selectioner le libellé de l'operation</mat-label>
+            <mat-select formControlName="description">
+                <mat-option *ngFor="let option of options" [value]="option.description">{{option?.description}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mb-6" appearance="fill">
+            <mat-label>Montant</mat-label>
+            <input type="number" matInput formControlName="amount" placeholder="Ex. 15000">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Date operation</mat-label>
+            <input matInput formControlName="operationDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="flex justify-items-center items-center mb-10">
+            <h3 class="mr-4 font-semibold text-gray-600 text-sm">Sens de l'operation:</h3>
+            <mat-radio-group formControlName="operation" class="flex">
+                <mat-radio-button value="recette">Recettes</mat-radio-button>
+                <mat-radio-button value="depense">Depenses</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <button mat-raised-button color="primary">Valider</button>
+    </form>
+
+</div>

@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {CoreState} from "../../../core/store/core.reducer";
 import {onNotificationMessage} from "../../../core/store/core.actions";
 import {ProductService} from "../../../core/services/products/product.service";
-import {PriceAndExpirationItem, ProductDetailResponse, ProductRow} from "../../../core/models";
+import {PriceAndExpirationItem, ProductDetailResponse} from "../../../core/models";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 
@@ -34,7 +34,7 @@ export class ConsultationGeneraleComponent implements OnInit, OnDestroy, AfterVi
   constructor(private stockageService: StockagesService, private store: Store<CoreState>, private productService: ProductService) {
   }
 
-  ngOnInit() {
+  ngOnInit():void {
     const searchText$ = this.myControl.valueChanges.pipe(
       startWith(''),
       debounceTime(400),

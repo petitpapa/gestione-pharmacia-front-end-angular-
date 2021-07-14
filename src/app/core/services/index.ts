@@ -5,3 +5,5 @@ export * from './rayons/rayons.service';
 export * from './settings/settings.service';
 export * from './ventes.service';
 export * from './customer.service';
+export * from './order.service';
+export * from './income-expense.service';

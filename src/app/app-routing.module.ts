@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'parametrages', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
   { path: 'commandes', loadChildren: () => import('./commandes/commandes.module').then(m => m.CommandeModule) },
   { path: 'ventes', loadChildren: () => import('./ventes/ventes.module').then(m => m.VentesModule) },
+  { path: 'caisses-banques', loadChildren: () => import('./checkout-bank/checkout-bank.module').then(m => m.CheckoutBankModule) },
   {
     path: '**',
     component: PageNotFoundComponent

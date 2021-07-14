@@ -1,0 +1,60 @@
+<div class="px-4 flex flex-col">
+    <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider my-6 underline">Situation de caisse de la
+        journée demandée </p>
+
+    <div class="spinner__centered" *ngIf="isLoading; else cashRegister">
+        <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+    </div>
+
+    <ng-template #cashRegister>
+        <div class="container--income--expense text-xs shadow-xl bg-white rounded-xl py-6 px-8">
+            <p class="mb-6">journée du {{formattedDate}}</p>
+            <p class="expenses--text">Depenses</p>
+            <p>Recettes</p>
+
+            <p class="mb-6 table--header">Ouverture(Fond de caisse)</p>
+            <p class="expenses--text table--row"></p>
+            <p class="table--row relative">{{data?.openingCashFund |number}} <span class="absolute -top-1 text--currency">FG</span></p>
+            <p class="mb-6 table--header">Ventes annulées / réalisées</p>
+            <p class="expenses--text table--row"></p>
+            <p class="table--row relative">{{data?.allSales|number}} <span class="absolute -top-1 text--currency">FG</span></p>
+            <p class="mb-6 table--header">CLients: credit / reglement</p>
+            <p class="expenses--text table--row relative">{{data?.clientExpenses| number}}<span class="absolute -top-1 text--currency">FG</span></p>
+            <p class="table--row relative">{{data?.clientIncomes|number}} <span class="absolute -top-1 text--currency">FG</span></p>
+            <p class="mb-6 table--header">Dépenses / Recettes diverses</p>
+            <p class="expenses--text table--row relative">{{data?.expensesOperation|number}} <span class="absolute -top-1 text--currency">FG</span></p>
+            <p class="table--row relative">{{data?.incomesOperation|number}} <span class="absolute -top-1 text--currency">FG</span></p>
+        </div>
+
+        <div class="flex mt-6 justify-between px-8">
+            <p class="mr-44 font-semibold text-gray-600">Cloture /solde caisse</p>
+            <p class="text-indigo-500 font-semibold relative">{{data?.sold|number}} <span
+                    class="absolute -top-1 text--currency">FG</span> </p>
+        </div>
+
+
+        <div class="grid grid-cols-2 mt-12 text-xs shadow-xl bg-white rounded-xl py-6 px-8">
+            <div class="grid grid-cols-2 w-full mt-8">
+                <p>Depenses:</p>
+                <p class="expenses--text relative">{{data?.expenses|number}} <span class="absolute -top-1 text--currency">FG</span> </p>
+                <p>Credits:</p>
+                <p class="relative">{{data?.incomes|number}} <span class="absolute -top-1 text--currency">FG</span> </p>
+            </div>
+
+            <div class="flex flex-col w-full">
+                <mat-form-field appearance="fill">
+                    <mat-label>Fond de caisse souhaité pour ouverture journée</mat-label>
+                    <input type="number" [formControl]="nextOpeningCashFund" matInput placeholder="Ex. 45000">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Montant a decaisser</mat-label>
+                    <input type="number" readonly matInput [(ngModel)]="amountToTake">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="my-6">
+            <button mat-raised-button class="btn--detail--caisse">voir detail de la caisse</button>
+        </div>
+    </ng-template>
+</div>

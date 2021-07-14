@@ -1,0 +1,17 @@
+<div class="flex flex-col text-xs">
+    <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6">Consultation caisse </p>
+    <form class="flex flex-col" (ngSubmit)="confirm()" [formGroup]="dateGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Journée du </mat-label>
+            <input formControlName="chosenDate" matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button class="btn--validate">
+            <mat-icon color="primary" matTooltip="Valider">sync</mat-icon>
+        </button>
+
+    </form>
+
+</div>

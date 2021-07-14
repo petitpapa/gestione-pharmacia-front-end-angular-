@@ -9,14 +9,14 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class StatsService extends  HttpServiceRequest<CoreState>{
+export class StatsService extends  HttpServiceRequest{
   baseUrl= '/rs/stats';
 
-  constructor(private http: HttpClient, store: Store<CoreState>) {
-    super(store);
+  constructor(private http: HttpClient) {
+    super();
   }
   loadPurchaseProductByMonth(): Observable<any>{
-    return this.http.get(this.baseUrl + '/purchase-products-by-month').pipe(catchError(this.handleError<any>()));
+    return this.http.get(this.baseUrl + '/purchase-products-by-month').pipe(catchError(this.handleError()));
   }
 
 }

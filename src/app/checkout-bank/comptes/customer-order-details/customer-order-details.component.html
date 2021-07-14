@@ -1,0 +1,78 @@
+<div class="text-xs">
+
+
+    <h1 mat-dialog-title class="text-indigo-600 font-semibold uppercase text-xs tracking-wider underline">
+        {{data?.description}}
+    </h1>
+    <p *ngIf="data && data.orderHistories?.length > 0" class="mb-6 px-4 text-gray-500 font-semibold">Total Facture:
+        <span class="text-red-500 ml-2 relative">{{total}} <span class="currency--text absolute -top-1">FG</span></span>
+    </p>
+    <p *ngIf="data && data.orderHistories?.length > 0" class="mb-6 px-4 text-gray-500 font-semibold"> Total Payé: <span
+            class="ml-6 relative">{{totalPaid}}<span class="currency--text absolute -top-1">FG</span></span> </p>
+    <div mat-dialog-content class="mt-6">
+        <div class="grid grid-cols-5 underline " *ngIf="data && data.orderDetails?.length > 0">
+            <span class="table--header">Produit</span>
+            <span class="table--header">Quantité</span>
+            <span class="table--header">Prix unitaire</span>
+            <span class="table--header">Total</span>
+        </div>
+        <div *ngIf="data && data.orderDetails?.length > 0">
+            <ul class="grid grid-cols-5" *ngFor="let item of data?.orderDetails">
+                <li class="table--row">{{item.productName}}</li>
+                <li class="table--row">{{item.qty}}</li>
+                <li class="table--row">{{item.price}}</li>
+                <li class="table--row">{{item.total}}</li>
+            </ul>
+        </div>
+
+
+        <div class="mat-elevation-z8 mt-6" *ngIf="data && data.orderHistories?.length > 0">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="paid">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef> Payé </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.amountPaid | number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef> Date Paiment </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{ formatDate(row.paidOn) }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="notes">
+                    <th class="table--header" mat-header-cell *matHeaderCellDef> Notes </th>
+                    <td class="table--row" mat-cell *matCellDef="let row"> {{row.notes}} </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+            <mat-paginator #historiesPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+
+
+        <form *ngIf="data && data.orderHistories?.length > 0" class="mt-10 flex flex-col" >
+            <mat-form-field appearance="fill">
+                <mat-label>Regler la facture</mat-label>
+                <input type="email" matInput [formControl]="amountControl" placeholder="Ex. 12000">
+
+            </mat-form-field>
+            <mat-form-field class="mt-6" appearance="fill">
+                <mat-label>Ajouter une note</mat-label>
+                <textarea [formControl]="noteControl"matInput placeholder="Ex. Le client paiera..."></textarea>
+            </mat-form-field>
+        </form>
+
+    </div>
+
+
+    <div mat-dialog-actions>
+        <button class="btn--leave" mat-raised-button (click)="onNoClick()">Quitter</button>
+        <button *ngIf="data && data.orderHistories?.length > 0" color="primary" mat-raised-button
+            (click)="onConfirm()">Regler la facture</button>
+    </div>
+</div>

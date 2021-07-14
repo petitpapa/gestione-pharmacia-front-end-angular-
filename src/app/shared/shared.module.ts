@@ -61,6 +61,7 @@ import { SupplierSelectComponent } from './components/supplier-select/supplier-s
 import { DataPropertyGetterPipe } from './pipes/data-property-getter.pipe';
 import { ProductReturnStateParserPipe } from './pipes/product-return-state-parser.pipe';
 import { DatePickerTwoRangeComponent } from './components/date-picker-two-range/date-picker-two-range.component';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
 @NgModule({
@@ -108,7 +109,7 @@ import { DatePickerTwoRangeComponent } from './components/date-picker-two-range/
         MatSortModule,
         MatTableModule,
         MatTooltipModule,
-        OverlayModule,
+        OverlayModule,MatMomentDateModule,
         PortalModule, ReactiveFormsModule,],
   exports: [TranslateModule, WebviewDirective, FormsModule,
 

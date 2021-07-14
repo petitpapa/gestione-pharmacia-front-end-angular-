@@ -1,0 +1,54 @@
+<div class="px-4">
+  <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6">
+    Liste inventaire du mois en cours/precedent
+  </p>
+
+  <div class="spinner__centered" *ngIf="isLoading; else productInv">
+    <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+  </div>
+
+  <ng-template #productInv>
+    <div class="mat-elevation-z8 mt-6">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="form">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Forme </th>
+          <td class="table--row" [ngClass]="{'text-red-600 ': row.form}" mat-cell *matCellDef="let row"> {{row.form}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.product}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix de vente actual </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="initial">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Stock precedent </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.stockInitial}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="final">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté Stock </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.stockLevel}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="difference">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> difference qunatité </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.stockLevel - row.stockInitial}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+      <mat-paginator #previousMonthInvPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+  </ng-template>
+
+</div>

@@ -1,0 +1,98 @@
+<div class="px-4">
+  <p class="text-indigo-600 font-semibold uppercase text-xs tracking-wider mt-6">
+    Liste inventaire a partir de Janvier
+  </p>
+
+  <p class="text-xs text-red-500 mt-6">Jours de couverture: Le stock est ici renouvelé en moyenne tous les x jours</p>
+
+
+  <div class="spinner__centered" *ngIf="isLoading; else productInv">
+    <mat-spinner [diameter]="70" [strokeWidth]="2" class="mx-auto my-auto"></mat-spinner>
+  </div>
+
+  <ng-template #productInv>
+    <div class="mat-elevation-z8 mt-6">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="form">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Forme </th>
+          <td class="table--row" [ngClass]="{'text-red-600 ': row.form}" mat-cell *matCellDef="let row"> {{row.form}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+          <td class="table--row" mat-cell *matCellDef="let row"> {{row.product}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix de vente </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="purchase">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Prix achat </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.purchase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="margin">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Marge </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.margin}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="initial">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté(s) initial </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.stockInitial}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtySell">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté(s) vendue(s) </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.qtySell}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtyPurchase">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté(s) achetée(s) </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.purchaseQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="emitted">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté avoir emis </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.issueQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="return">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté avoir refusé </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.returnedQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="suspended">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté avoir suspendue </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.suspendedQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accepted">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté avoir accepté </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.acceptedQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="final">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Qté Stock </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.stockLevel}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="couverture">
+          <th class="table--header" mat-header-cell *matHeaderCellDef mat-sort-header> Jours de couverture </th>
+          <td class="table--row text-right" mat-cell *matCellDef="let row"> {{row.inventoryDays}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+      <mat-paginator #proposalPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+  </ng-template>
+
+
+</div>

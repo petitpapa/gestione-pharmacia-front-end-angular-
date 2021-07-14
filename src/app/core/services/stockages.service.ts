@@ -9,15 +9,15 @@ import {Store} from "@ngrx/store";
 @Injectable({
   providedIn: 'root'
 })
-export class StockagesService extends  HttpServiceRequest<CoreState>{
+export class StockagesService extends  HttpServiceRequest{
   baseUrl= '/rs/stockages';
 
-  constructor(private http: HttpClient, store: Store<CoreState>) {
-    super(store);
+  constructor(private http: HttpClient) {
+    super();
   }
 
   autoSearchProducts(word): Observable<any>{
-    return this.http.post(this.baseUrl + '/auto-complete-search-product',{"wordToSearch": word}).pipe(catchError(this.handleError<any>()));
+    return this.http.post(this.baseUrl + '/auto-complete-search-product',{"wordToSearch": word}).pipe(catchError(this.handleError()));
   }
 
 }
