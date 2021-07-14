@@ -1,6 +1,6 @@
 
 # Introduction
-a simple application for managing pharmacy's sales, ordering, inventory, and cash register. It uses angular 11, angular material, and tailwind css. In order to fully work it's should be integrated with a backend(spring-boot), I already maded, i will push it later.
+a simple application for managing pharmacy's sales, ordering, inventory, and cash register. It uses angular 11, angular material, ngrx and tailwind css. In order to fully work it's should be integrated with a backend(spring-boot), I already maded, i will push it later.
 Bootstrap and package your project with Angular 11 and Electron 11 (Typescript + SASS + Hot Reload) for creating Desktop applications.
 
 Currently runs with:
